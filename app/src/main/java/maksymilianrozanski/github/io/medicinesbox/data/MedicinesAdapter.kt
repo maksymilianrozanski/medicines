@@ -37,14 +37,15 @@ class MedicinesAdapter(private val list: ArrayList<Medicine>, private val contex
 
         fun bindViews(medicine: Medicine) {
             medicineName.text = medicine.name
-            medicineQuantity.text = medicine.quantity.toString()
-            medicineDailyUsage.text = medicine.dailyUsage.toString()
+            medicineQuantity.text = "Quantity: ${medicine.quantity.toString()}"
+            medicineDailyUsage.text = "Daily usage: ${medicine.dailyUsage.toString()}"
             medicineSavedTime.text = medicine.showFormattedDate()
+
+            medicineName.setOnClickListener(this)
         }
 
         override fun onClick(view: View?) {
-            Toast.makeText(context, "You clicked ${view.toString()} "
-                    , Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Clicked name", Toast.LENGTH_SHORT).show()
         }
     }
 }
