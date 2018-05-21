@@ -28,12 +28,12 @@ class MainActivity : AppCompatActivity() {
         databaseHandler = MedicinesDatabaseHandler(this)
 
         //insert example data
-        var exampleMedicine = Medicine()
-        exampleMedicine.name = "Paracetamol"
-        exampleMedicine.quantity = 10
-        exampleMedicine.dailyUsage = 1
-        exampleMedicine.savedTime = 1526835161326L
-        databaseHandler!!.createMedicine(exampleMedicine)
+//        var exampleMedicine = Medicine()
+//        exampleMedicine.name = "Paracetamol"
+//        exampleMedicine.quantity = 10
+//        exampleMedicine.dailyUsage = 1
+//        exampleMedicine.savedTime = 1526835161326L
+//        databaseHandler!!.createMedicine(exampleMedicine)
 
         medicineListFromDb = ArrayList()
         medicineListForAdapter = ArrayList()
