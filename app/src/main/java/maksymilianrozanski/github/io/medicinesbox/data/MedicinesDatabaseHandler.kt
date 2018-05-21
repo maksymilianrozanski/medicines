@@ -11,7 +11,7 @@ class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DAT
 
 
     override fun onCreate(database: SQLiteDatabase?) {
-        var createMedicineTable = "CREATE TABKE $TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY," +
+        var createMedicineTable = "CREATE TABLE $TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY," +
                 "$KEY_NAME TEXT, $KEY_QUANTITY INTEGER," +
                 " $KEY_DAILY_USAGE INTEGER, $KEY_SAVED_TIME LONG); "
         database?.execSQL(createMedicineTable)
