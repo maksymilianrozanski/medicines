@@ -11,7 +11,7 @@ import android.widget.Toast
 import maksymilianrozanski.github.io.medicinesbox.R
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
 
-class MedicinesAdapter(private val list: ArrayList<Medicine>, private val context: Context) :
+class MedicinesAdapter(private var list: ArrayList<Medicine>, private val context: Context) :
         RecyclerView.Adapter<MedicinesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,6 +26,11 @@ class MedicinesAdapter(private val list: ArrayList<Medicine>, private val contex
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindViews(list[position])
+    }
+
+    fun setList( newList: ArrayList<Medicine>){
+        this.list = newList
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View, context: Context, list: ArrayList<Medicine>)

@@ -6,10 +6,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesAdapter
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesDatabaseHandler
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,14 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         databaseHandler = MedicinesDatabaseHandler(this)
 
-        //insert example data
-//        var exampleMedicine = Medicine()
-//        exampleMedicine.name = "Paracetamol"
-//        exampleMedicine.quantity = 10
-//        exampleMedicine.dailyUsage = 1
-//        exampleMedicine.savedTime = 1526835161326L
-//        databaseHandler!!.createMedicine(exampleMedicine)
-
         medicineListFromDb = ArrayList()
         medicineListForAdapter = ArrayList()
         layoutManger = LinearLayoutManager(this)
@@ -43,20 +37,7 @@ class MainActivity : AppCompatActivity() {
         recyclerViewId.layoutManager = layoutManger
         recyclerViewId.adapter = adapter
 
-        medicineListFromDb = databaseHandler!!.readMedicines()
-        medicineListFromDb!!.reverse()
-
-        for (medicine in medicineListFromDb!!.iterator()) {
-            val currentMedicine = Medicine()
-            currentMedicine.id = medicine.id
-            currentMedicine.name = medicine.name
-            currentMedicine.quantity = medicine.quantity
-            currentMedicine.dailyUsage = medicine.dailyUsage
-            currentMedicine.savedTime = medicine.savedTime
-
-            medicineListForAdapter!!.add(currentMedicine)
-        }
-        adapter!!.notifyDataSetChanged()
+        reloadAdapterDataFromDb()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -71,7 +52,31 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
+            R.id.addExampleItem -> {
+                addExampleItem()
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun reloadAdapterDataFromDb() {
+        medicineListFromDb = databaseHandler!!.readMedicines()
+        adapter!!.setList(medicineListFromDb!!)
+    }
+
+    private fun addExampleItem() {
+        var exampleMedicine = Medicine()
+        exampleMedicine.name = "Example name"
+        var random = Random()
+        var randomInt = random.nextInt(10)
+        exampleMedicine.quantity = randomInt
+        exampleMedicine.dailyUsage = 1
+        exampleMedicine.savedTime = System.currentTimeMillis()
+        databaseHandler!!.createMedicine(exampleMedicine)
+
+        reloadAdapterDataFromDb()
+
+        Toast.makeText(this, "Adding new example item", Toast.LENGTH_SHORT).show()
     }
 }
