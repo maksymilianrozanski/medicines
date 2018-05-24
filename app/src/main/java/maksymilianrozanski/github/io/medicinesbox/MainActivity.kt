@@ -8,18 +8,21 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import maksymilianrozanski.github.io.medicinesbox.component.DaggerDatabaseComponent
+import maksymilianrozanski.github.io.medicinesbox.component.DatabaseComponent
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesAdapter
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesDatabaseHandler
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
+import maksymilianrozanski.github.io.medicinesbox.module.ContextModule
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private var adapter: MedicinesAdapter? = null
-    private var medicineListFromDb: ArrayList<Medicine>? = null
-    private var medicineListForAdapter: ArrayList<Medicine>? = null
+    private var medicineListFromDb: ArrayList<Medicine> = ArrayList()
 
     private var layoutManger: RecyclerView.LayoutManager? = null
+    var databaseComponent: DatabaseComponent?  =  null
     var databaseHandler: MedicinesDatabaseHandler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,17 +30,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        databaseHandler = MedicinesDatabaseHandler(this)
+        databaseComponent = DaggerDatabaseComponent.builder()
+                .contextModule(ContextModule(this)).build()
+        databaseHandler = databaseComponent!!.getDatabaseHandler()
 
-        medicineListFromDb = ArrayList()
-        medicineListForAdapter = ArrayList()
         layoutManger = LinearLayoutManager(this)
-        adapter = MedicinesAdapter(medicineListForAdapter!!, this)
+        adapter = MedicinesAdapter(medicineListFromDb, this)
 
         recyclerViewId.layoutManager = layoutManger
         recyclerViewId.adapter = adapter
 
         reloadAdapterDataFromDb()
+    }
+
+    private fun reloadAdapterDataFromDb() {
+        medicineListFromDb = databaseHandler!!.readMedicines()
+        adapter!!.setList(medicineListFromDb)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -58,11 +66,6 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun reloadAdapterDataFromDb() {
-        medicineListFromDb = databaseHandler!!.readMedicines()
-        adapter!!.setList(medicineListFromDb!!)
     }
 
     private fun addExampleItem() {
