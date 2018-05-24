@@ -1,6 +1,8 @@
 package maksymilianrozanski.github.io.medicinesbox
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.annotation.VisibleForTesting
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -66,6 +68,12 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    @VisibleForTesting
+    fun runNewItemActivity(){
+        var intent = Intent(this, AddEditActivity::class.java)
+        startActivity(intent)
     }
 
     private fun addExampleItem() {
