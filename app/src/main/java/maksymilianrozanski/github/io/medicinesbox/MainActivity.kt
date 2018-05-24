@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private var medicineListFromDb: ArrayList<Medicine> = ArrayList()
 
     private var layoutManger: RecyclerView.LayoutManager? = null
-    var databaseComponent: DatabaseComponent?  =  null
+    var databaseComponent: DatabaseComponent? = null
     var databaseHandler: MedicinesDatabaseHandler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,15 +63,17 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             R.id.addExampleItem -> {
-                addExampleItem()
-                return true
+                addExampleItem(); return true
+            }
+            R.id.addNewItem -> {
+                runNewItemActivity(); return true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     @VisibleForTesting
-    fun runNewItemActivity(){
+    fun runNewItemActivity() {
         var intent = Intent(this, AddEditActivity::class.java)
         startActivity(intent)
     }
