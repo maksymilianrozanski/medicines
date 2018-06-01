@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import maksymilianrozanski.github.io.medicinesbox.model.*
 
-class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+open class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
 
     override fun onCreate(database: SQLiteDatabase?) {
@@ -22,7 +22,7 @@ class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DAT
         onCreate(database)
     }
 
-    fun createMedicine(medicine: Medicine) {
+    open fun createMedicine(medicine: Medicine) {
         var database: SQLiteDatabase = writableDatabase
 
         var values = ContentValues()
@@ -36,7 +36,7 @@ class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DAT
         database.close()
     }
 
-    fun readMedicine(id: Int): Medicine {
+    open fun readMedicine(id: Int): Medicine {
         var database: SQLiteDatabase = writableDatabase
         var cursor: Cursor = database.query(TABLE_NAME,
                 arrayOf(KEY_ID, KEY_NAME, KEY_QUANTITY, KEY_DAILY_USAGE, KEY_SAVED_TIME),
@@ -57,7 +57,7 @@ class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DAT
         return medicine
     }
 
-    fun readMedicines(): ArrayList<Medicine> {
+    open fun readMedicines(): ArrayList<Medicine> {
         var database: SQLiteDatabase = readableDatabase
         var list: ArrayList<Medicine> = ArrayList()
 
@@ -82,7 +82,7 @@ class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DAT
         return list
     }
 
-    fun updateMedicine(medicine: Medicine): Int {
+    open fun updateMedicine(medicine: Medicine): Int {
         var database: SQLiteDatabase = writableDatabase
         var values = ContentValues()
         values.put(KEY_NAME, medicine.name)
@@ -97,13 +97,13 @@ class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DAT
         }
     }
 
-    fun deleteMedicine(id: Int) {
+    open fun deleteMedicine(id: Int) {
         var database: SQLiteDatabase = writableDatabase
         database.delete(TABLE_NAME, "$KEY_ID =?", arrayOf(id.toString()))
         database.close()
     }
 
-    fun getMedicinesCount(): Int {
+    open fun getMedicinesCount(): Int {
         var database: SQLiteDatabase = readableDatabase
         var countQuery = "SELECT * FROM $TABLE_NAME"
         var cursor: Cursor = database.rawQuery(countQuery, null)

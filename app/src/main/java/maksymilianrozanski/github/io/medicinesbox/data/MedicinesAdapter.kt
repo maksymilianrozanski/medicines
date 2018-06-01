@@ -1,6 +1,7 @@
 package maksymilianrozanski.github.io.medicinesbox.data
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import maksymilianrozanski.github.io.medicinesbox.AddEditActivity
 import maksymilianrozanski.github.io.medicinesbox.R
+import maksymilianrozanski.github.io.medicinesbox.model.KEY_ID
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
 
 class MedicinesAdapter(private var list: ArrayList<Medicine>, private val context: Context) :
@@ -41,6 +44,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
         var medicineDailyUsage = itemView.findViewById(R.id.medicineDailyUsage) as TextView
         var medicineSavedTime = itemView.findViewById(R.id.medicineSaveDate) as TextView
         var deleteButton  = itemView.findViewById(R.id.deleteButton) as Button
+        var editButton = itemView.findViewById(R.id.editButton) as Button
 
         fun bindViews(medicine: Medicine) {
             medicineName.text = medicine.name
@@ -50,19 +54,27 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
 
             medicineName.setOnClickListener(this)
             deleteButton.setOnClickListener(this)
+            editButton.setOnClickListener(this)
         }
 
         override fun onClick(view: View?) {
             var medicine = list[adapterPosition]
 
-           if (view?.id == deleteButton.id) {
-               Toast.makeText(context, "Clicked delete button, Deleting! : ${medicine.id}", Toast.LENGTH_SHORT).show()
-               list.removeAt(adapterPosition)
-               deleteItem(medicine.id!!)
-               notifyItemRemoved(adapterPosition)
-           }else{
-               Toast.makeText(context, "Clicked something else", Toast.LENGTH_SHORT).show()
-           }
+            when {
+                view?.id == deleteButton.id -> {
+                    Toast.makeText(context, "Clicked delete button, Deleting! : ${medicine.id}", Toast.LENGTH_SHORT).show()
+                    list.removeAt(adapterPosition)
+                    deleteItem(medicine.id!!)
+                    notifyItemRemoved(adapterPosition)
+                }
+                view?.id == editButton.id -> {
+                    Toast.makeText(context, "Clicked edit button, medicine id: ${medicine.id}",Toast.LENGTH_SHORT).show()
+                    var intent = Intent(context, AddEditActivity::class.java)
+                    intent.putExtra(KEY_ID, medicine)
+                    context.startActivity(intent)
+                }
+                else -> Toast.makeText(context, "Clicked something else", Toast.LENGTH_SHORT).show()
+            }
         }
 
         private fun deleteItem(id: Int){

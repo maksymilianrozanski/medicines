@@ -10,31 +10,31 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import maksymilianrozanski.github.io.medicinesbox.component.DaggerDatabaseComponent
-import maksymilianrozanski.github.io.medicinesbox.component.DatabaseComponent
+import maksymilianrozanski.github.io.medicinesbox.component.MainActivityComponent
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesAdapter
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesDatabaseHandler
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
-import maksymilianrozanski.github.io.medicinesbox.module.ContextModule
 import java.util.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private var adapter: MedicinesAdapter? = null
     private var medicineListFromDb: ArrayList<Medicine> = ArrayList()
-
     private var layoutManger: RecyclerView.LayoutManager? = null
-    var databaseComponent: DatabaseComponent? = null
-    var databaseHandler: MedicinesDatabaseHandler? = null
+
+    @Inject
+    lateinit var databaseHandler: MedicinesDatabaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        databaseComponent = DaggerDatabaseComponent.builder()
-                .contextModule(ContextModule(this)).build()
-        databaseHandler = databaseComponent!!.getDatabaseHandler()
+
+        (application as MyApp).appComponent
+                .plus(MainActivityComponent.Module())
+                .inject(this)
 
         layoutManger = LinearLayoutManager(this)
         adapter = MedicinesAdapter(medicineListFromDb, this)
@@ -45,8 +45,9 @@ class MainActivity : AppCompatActivity() {
         reloadAdapterDataFromDb()
     }
 
+
     private fun reloadAdapterDataFromDb() {
-        medicineListFromDb = databaseHandler!!.readMedicines()
+        medicineListFromDb = databaseHandler.readMedicines()
         adapter!!.setList(medicineListFromDb)
     }
 
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         exampleMedicine.quantity = randomInt
         exampleMedicine.dailyUsage = 1
         exampleMedicine.savedTime = System.currentTimeMillis()
-        databaseHandler!!.createMedicine(exampleMedicine)
+        databaseHandler.createMedicine(exampleMedicine)
 
         reloadAdapterDataFromDb()
 
