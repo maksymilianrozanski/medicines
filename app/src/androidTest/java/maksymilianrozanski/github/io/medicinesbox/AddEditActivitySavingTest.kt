@@ -1,10 +1,10 @@
 package maksymilianrozanski.github.io.medicinesbox
 
 import android.content.Context
+import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.action.ViewActions.typeText
+import android.support.test.espresso.action.ViewActions.*
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
@@ -12,6 +12,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.test.mock.MockContext
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesDatabaseHandler
+import maksymilianrozanski.github.io.medicinesbox.model.KEY_ID
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
 import maksymilianrozanski.github.io.medicinesbox.module.AppModule
 import maksymilianrozanski.github.io.medicinesbox.module.ContextModule
@@ -109,5 +110,40 @@ class AddEditActivitySavingTest {
         expectedMedicine.dailyUsage = 2
 
         verify(mockedMedicinesDatabaseHandler).createMedicine(myArgThat(hasMedicine(expectedMedicine)))
+    }
+
+    @Test
+    fun savingEditedMedicineTest() {
+        var medicineInIntent = Medicine()
+        medicineInIntent.id = 5
+        medicineInIntent.name = "Paracetamol"
+        medicineInIntent.quantity = 15
+        medicineInIntent.dailyUsage = 2
+        var launchIntent = Intent()
+        launchIntent.putExtra(KEY_ID, medicineInIntent)
+
+        activityRule.launchActivity(launchIntent)
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("15")))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("2")))
+
+        onView(withId(R.id.medicineNameEditText)).perform(replaceText("Acetaminophen"))
+        onView(withId(R.id.medicineQuantityEditText)).perform(replaceText("13"))
+        onView(withId(R.id.medicineDailyUsageEditText)).perform(replaceText("1"))
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Acetaminophen")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("13")))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("1")))
+
+        onView(withId(R.id.saveButton)).perform(click())
+
+        var mockedMedicinesDatabaseHandler = activityRule.activity.databaseHandler
+        var expectedMedicine = Medicine()
+        expectedMedicine.name = "Acetaminophen"
+        expectedMedicine.quantity = 13
+        expectedMedicine.dailyUsage = 1
+
+        verify(mockedMedicinesDatabaseHandler).updateMedicine(myArgThat(hasMedicine(expectedMedicine)))
     }
 }
