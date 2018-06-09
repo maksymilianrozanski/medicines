@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         reloadAdapterDataFromDb()
     }
 
+    override fun onResume() {
+        super.onResume()
+        reloadAdapterDataFromDb()
+    }
 
     private fun reloadAdapterDataFromDb() {
         medicineListFromDb = databaseHandler.readMedicines()

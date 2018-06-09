@@ -10,4 +10,5 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class, DatabaseModule::class])
 interface TestAppComponent :AppComponent{
     fun inject(test:MainActivityDbTest)
+    fun inject(test:AddEditActivitySavingTest)
 }

@@ -1,0 +1,98 @@
+package maksymilianrozanski.github.io.medicinesbox
+
+import android.content.Context
+import android.support.test.InstrumentationRegistry
+import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.typeText
+import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.rule.ActivityTestRule
+import android.support.test.runner.AndroidJUnit4
+import android.test.mock.MockContext
+import maksymilianrozanski.github.io.medicinesbox.data.MedicinesDatabaseHandler
+import maksymilianrozanski.github.io.medicinesbox.model.Medicine
+import maksymilianrozanski.github.io.medicinesbox.module.AppModule
+import maksymilianrozanski.github.io.medicinesbox.module.ContextModule
+import maksymilianrozanski.github.io.medicinesbox.module.DatabaseModule
+import org.junit.Before
+import org.junit.Ignore
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mockito
+import org.mockito.Mockito.verify
+import org.mockito.MockitoAnnotations
+
+
+@RunWith(AndroidJUnit4::class)
+class AddEditActivitySavingTest {
+
+    @Rule
+    @JvmField
+    var activityRule: ActivityTestRule<AddEditActivity> = ActivityTestRule(AddEditActivity::class.java, true, false)
+
+    private lateinit var testAppComponent: TestAppComponent
+    private lateinit var mockedContext: Context
+
+    @Before
+    fun setup() {
+        MockitoAnnotations.initMocks(this)
+        val app = InstrumentationRegistry.getInstrumentation()
+                .targetContext.applicationContext as MyApp
+
+        mockedContext = Mockito.mock(MockContext::class.java)
+
+        testAppComponent = DaggerTestAppComponent.builder()
+                .contextModule(ContextModule(app))
+                .appModule(AppModule(app))
+                .databaseModule(MyTestDbModule())
+                .build()
+
+        app.appComponent = testAppComponent
+        testAppComponent.inject(this)
+    }
+
+    @Ignore
+    class MyTestDbModule() : DatabaseModule() {
+        override fun medicinesDatabaseHandler(context: Context?): MedicinesDatabaseHandler {
+            return Mockito.mock(MedicinesDatabaseHandler::class.java)
+        }
+    }
+
+    private fun <T> any(): T {
+        Mockito.any<T>()
+        return uninitialized()
+    }
+
+    private fun <T> uninitialized(): T = null as T
+
+    @Test
+    fun savingNewMedicineTest() {
+        activityRule.launchActivity(null)
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("")))
+
+        onView(withId(R.id.medicineNameEditText)).perform(typeText("Paracetamol"))
+        onView(withId(R.id.medicineQuantityEditText)).perform(typeText("13"))
+        onView(withId(R.id.medicineDailyUsageEditText)).perform(typeText("2"))
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("13")))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("2")))
+
+        onView(withId(R.id.saveButton)).perform(click())
+
+        var mockedMedicinesDatabaseHandler = activityRule.activity.databaseHandler
+
+        var expectedMedicine = Medicine()
+        expectedMedicine.name = "Paracetamol"
+        expectedMedicine.quantity = 13
+        expectedMedicine.dailyUsage = 2
+
+        verify(mockedMedicinesDatabaseHandler).createMedicine(any())
+    }
+}

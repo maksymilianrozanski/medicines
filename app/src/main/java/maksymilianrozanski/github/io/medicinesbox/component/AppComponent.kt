@@ -18,6 +18,8 @@ interface AppComponent {
 
     fun plus(module: MainActivityComponent.Module): MainActivityComponent
 
+    fun plusAddEditActivity(module: AddEditActivityComponent.Module) : AddEditActivityComponent
+
     @ApplicationContext
     fun getContext(): Context
 
