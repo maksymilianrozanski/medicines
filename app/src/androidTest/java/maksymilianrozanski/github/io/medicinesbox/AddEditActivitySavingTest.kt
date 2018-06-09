@@ -21,6 +21,7 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatcher
 import org.mockito.Mockito
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
@@ -61,12 +62,26 @@ class AddEditActivitySavingTest {
         }
     }
 
-    private fun <T> any(): T {
-        Mockito.any<T>()
-        return uninitialized()
+    private class MedicineMatcher(var expectedMedicine: Medicine) : ArgumentMatcher<Medicine> {
+        override fun matches(argument: Medicine): Boolean {
+            return argument.name.equals(expectedMedicine.name)
+                    && argument.quantity == expectedMedicine.quantity
+                    && argument.dailyUsage == expectedMedicine.dailyUsage
+        }
+
+        override fun toString(): String {
+            return "Inside MedicineMatcher's toString"
+        }
     }
 
-    private fun <T> uninitialized(): T = null as T
+    private fun hasMedicine(medicine: Medicine): MedicineMatcher {
+        return MedicineMatcher(medicine)
+    }
+
+    private fun <T> myArgThat(matcher: ArgumentMatcher<T>): T {
+        Mockito.argThat(matcher)
+        return null as T
+    }
 
     @Test
     fun savingNewMedicineTest() {
@@ -93,6 +108,6 @@ class AddEditActivitySavingTest {
         expectedMedicine.quantity = 13
         expectedMedicine.dailyUsage = 2
 
-        verify(mockedMedicinesDatabaseHandler).createMedicine(any())
+        verify(mockedMedicinesDatabaseHandler).createMedicine(myArgThat(hasMedicine(expectedMedicine)))
     }
 }
