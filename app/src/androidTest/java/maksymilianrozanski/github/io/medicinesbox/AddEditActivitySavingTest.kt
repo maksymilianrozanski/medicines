@@ -65,7 +65,8 @@ class AddEditActivitySavingTest {
 
     private class MedicineMatcher(var expectedMedicine: Medicine) : ArgumentMatcher<Medicine> {
         override fun matches(argument: Medicine): Boolean {
-            return argument.name.equals(expectedMedicine.name)
+            return argument.id == expectedMedicine.id
+                    && argument.name.equals(expectedMedicine.name)
                     && argument.quantity == expectedMedicine.quantity
                     && argument.dailyUsage == expectedMedicine.dailyUsage
         }
@@ -140,6 +141,7 @@ class AddEditActivitySavingTest {
 
         var mockedMedicinesDatabaseHandler = activityRule.activity.databaseHandler
         var expectedMedicine = Medicine()
+        expectedMedicine.id = 5
         expectedMedicine.name = "Acetaminophen"
         expectedMedicine.quantity = 13
         expectedMedicine.dailyUsage = 1
