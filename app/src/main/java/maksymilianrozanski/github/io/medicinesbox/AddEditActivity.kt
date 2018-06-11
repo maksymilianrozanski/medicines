@@ -8,6 +8,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_edit.*
 import maksymilianrozanski.github.io.medicinesbox.component.AddEditActivityComponent
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesDatabaseHandler
+import maksymilianrozanski.github.io.medicinesbox.data.TimeProvider
 import maksymilianrozanski.github.io.medicinesbox.model.KEY_ID
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
 import javax.inject.Inject
@@ -16,6 +17,9 @@ class AddEditActivity : AppCompatActivity() {
 
     @Inject
     lateinit var databaseHandler: MedicinesDatabaseHandler
+
+    @Inject
+    lateinit var timeProvider: TimeProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +45,7 @@ class AddEditActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             if (medicineFromIntent == null) {
                 saveNewMedicine()
-            }else {
+            } else {
                 saveEditedMedicine(medicineFromIntent)
             }
         }
@@ -54,7 +58,7 @@ class AddEditActivity : AppCompatActivity() {
         medicineToSave.dailyUsage = medicineDailyUsageEditText.text.toString().toInt()
 
         if (medicineToSave.name.toString().isNotBlank()) {
-            medicineToSave.savedTime = System.currentTimeMillis()
+            medicineToSave.savedTime = timeProvider.getCurrentTimeInMillis()
             databaseHandler.createMedicine(medicineToSave)
             Toast.makeText(this, "Saving new medicine.", Toast.LENGTH_SHORT).show()
             NavUtils.navigateUpFromSameTask(this)
@@ -71,7 +75,7 @@ class AddEditActivity : AppCompatActivity() {
             if (medicineToUpdate.name.toString().isNotBlank()) {
                 medicineToUpdate.quantity = medicineQuantityEditText.text.toString().toInt()
                 medicineToUpdate.dailyUsage = medicineDailyUsageEditText.text.toString().toInt()
-                medicineToUpdate.savedTime = System.currentTimeMillis()
+                medicineToUpdate.savedTime = timeProvider.getCurrentTimeInMillis()
                 medicineToUpdate.id = medicine.id
 
                 databaseHandler.updateMedicine(medicineToUpdate)
