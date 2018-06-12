@@ -5,10 +5,10 @@ import dagger.Provides
 import maksymilianrozanski.github.io.medicinesbox.data.TimeProvider
 
 @Module
-class TimeProviderModule {
+open class TimeProviderModule {
 
     @Provides
-    fun provideClock(): TimeProvider {
+    open fun provideClock(): TimeProvider {
         return TimeProvider()
     }
 }

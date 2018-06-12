@@ -12,11 +12,14 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.test.mock.MockContext
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesDatabaseHandler
+import maksymilianrozanski.github.io.medicinesbox.data.TestTimeProvider
+import maksymilianrozanski.github.io.medicinesbox.data.TimeProvider
 import maksymilianrozanski.github.io.medicinesbox.model.KEY_ID
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
 import maksymilianrozanski.github.io.medicinesbox.module.AppModule
 import maksymilianrozanski.github.io.medicinesbox.module.ContextModule
 import maksymilianrozanski.github.io.medicinesbox.module.DatabaseModule
+import maksymilianrozanski.github.io.medicinesbox.module.TimeProviderModule
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
@@ -37,6 +40,7 @@ class AddEditActivitySavingTest {
 
     private lateinit var testAppComponent: TestAppComponent
     private lateinit var mockedContext: Context
+    private val stoppedTime: Long = 1528819101551L //12.06.2018, 15:58
 
     @Before
     fun setup() {
@@ -50,6 +54,7 @@ class AddEditActivitySavingTest {
                 .contextModule(ContextModule(app))
                 .appModule(AppModule(app))
                 .databaseModule(MyTestDbModule())
+                .timeProviderModule(TestTimeProviderModule(stoppedTime))
                 .build()
 
         app.appComponent = testAppComponent
@@ -63,12 +68,20 @@ class AddEditActivitySavingTest {
         }
     }
 
+    @Ignore
+    class TestTimeProviderModule(var time: Long) : TimeProviderModule() {
+        override fun provideClock(): TimeProvider {
+            return TestTimeProvider(time)
+        }
+    }
+
     private class MedicineMatcher(var expectedMedicine: Medicine) : ArgumentMatcher<Medicine> {
         override fun matches(argument: Medicine): Boolean {
             return argument.id == expectedMedicine.id
                     && argument.name.equals(expectedMedicine.name)
                     && argument.quantity == expectedMedicine.quantity
                     && argument.dailyUsage == expectedMedicine.dailyUsage
+                    && argument.savedTime == expectedMedicine.savedTime
         }
 
         override fun toString(): String {
@@ -109,6 +122,7 @@ class AddEditActivitySavingTest {
         expectedMedicine.name = "Paracetamol"
         expectedMedicine.quantity = 13
         expectedMedicine.dailyUsage = 2
+        expectedMedicine.savedTime = stoppedTime
 
         verify(mockedMedicinesDatabaseHandler).createMedicine(myArgThat(hasMedicine(expectedMedicine)))
     }
@@ -120,6 +134,7 @@ class AddEditActivitySavingTest {
         medicineInIntent.name = "Paracetamol"
         medicineInIntent.quantity = 15
         medicineInIntent.dailyUsage = 2
+        medicineInIntent.savedTime = 1528624800000L   //10-06-2018, 12:00
         var launchIntent = Intent()
         launchIntent.putExtra(KEY_ID, medicineInIntent)
 
@@ -145,6 +160,7 @@ class AddEditActivitySavingTest {
         expectedMedicine.name = "Acetaminophen"
         expectedMedicine.quantity = 13
         expectedMedicine.dailyUsage = 1
+        expectedMedicine.savedTime = stoppedTime
 
         verify(mockedMedicinesDatabaseHandler).updateMedicine(myArgThat(hasMedicine(expectedMedicine)))
     }

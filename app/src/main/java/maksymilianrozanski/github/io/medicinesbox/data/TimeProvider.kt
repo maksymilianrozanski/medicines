@@ -1,8 +1,8 @@
 package maksymilianrozanski.github.io.medicinesbox.data
 
-class TimeProvider {
+open class TimeProvider {
 
-    fun getCurrentTimeInMillis(): Long {
+    open fun getCurrentTimeInMillis(): Long {
         return System.currentTimeMillis()
     }
 
