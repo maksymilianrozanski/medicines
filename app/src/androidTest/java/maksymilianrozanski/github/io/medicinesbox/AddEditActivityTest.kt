@@ -9,6 +9,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import maksymilianrozanski.github.io.medicinesbox.model.KEY_ID
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
+import org.hamcrest.Matchers.containsString
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,8 +27,8 @@ class AddEditActivityTest {
         var medicine = Medicine()
         medicine.id = 5
         medicine.name = "some name"
-        medicine.dailyUsage = 2
-        medicine.quantity = 10
+        medicine.dailyUsage = 2.0
+        medicine.quantity = 10.0
         medicine.savedTime = 1527957713864L
 
         var launchIntent = Intent()
@@ -36,8 +37,8 @@ class AddEditActivityTest {
         activityRule.launchActivity(launchIntent)
 
         onView(withId(R.id.medicineNameEditText)).check(matches(withText("some name")))
-        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("2")))
-        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("10")))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("2"))))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("10"))))
     }
 
     @Test
@@ -47,6 +48,4 @@ class AddEditActivityTest {
         onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("")))
         onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("")))
     }
-
-
 }

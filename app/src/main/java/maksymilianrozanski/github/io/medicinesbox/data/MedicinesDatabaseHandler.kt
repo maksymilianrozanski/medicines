@@ -12,8 +12,8 @@ open class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context
 
     override fun onCreate(database: SQLiteDatabase?) {
         var createMedicineTable = "CREATE TABLE $TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY," +
-                "$KEY_NAME TEXT, $KEY_QUANTITY INTEGER," +
-                " $KEY_DAILY_USAGE INTEGER, $KEY_SAVED_TIME LONG); "
+                "$KEY_NAME TEXT, $KEY_QUANTITY REAL," +
+                " $KEY_DAILY_USAGE REAL, $KEY_SAVED_TIME LONG); "
         database?.execSQL(createMedicineTable)
     }
 
@@ -49,8 +49,8 @@ open class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context
         var medicine = Medicine()
         medicine.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
         medicine.name = cursor.getString(cursor.getColumnIndex(KEY_NAME))
-        medicine.quantity = cursor.getInt(cursor.getColumnIndex(KEY_QUANTITY))
-        medicine.dailyUsage = cursor.getInt(cursor.getColumnIndex(KEY_DAILY_USAGE))
+        medicine.quantity = cursor.getDouble(cursor.getColumnIndex(KEY_QUANTITY))
+        medicine.dailyUsage = cursor.getDouble(cursor.getColumnIndex(KEY_DAILY_USAGE))
         medicine.savedTime = cursor.getLong(cursor.getColumnIndex(KEY_SAVED_TIME))
 
         cursor.close()
@@ -70,8 +70,8 @@ open class MedicinesDatabaseHandler(context: Context) : SQLiteOpenHelper(context
                 var medicine = Medicine()
                 medicine.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 medicine.name = cursor.getString(cursor.getColumnIndex(KEY_NAME))
-                medicine.quantity = cursor.getInt(cursor.getColumnIndex(KEY_QUANTITY))
-                medicine.dailyUsage = cursor.getInt(cursor.getColumnIndex(KEY_DAILY_USAGE))
+                medicine.quantity = cursor.getDouble(cursor.getColumnIndex(KEY_QUANTITY))
+                medicine.dailyUsage = cursor.getDouble(cursor.getColumnIndex(KEY_DAILY_USAGE))
                 medicine.savedTime = cursor.getLong(cursor.getColumnIndex(KEY_SAVED_TIME))
 
                 list.add(medicine)

@@ -10,8 +10,8 @@ class MedicineTest {
         var medicine = Medicine()
         medicine.id = 1
         medicine.name = "Paracetamol"
-        medicine.quantity = 20
-        medicine.dailyUsage = 1
+        medicine.quantity = 20.0
+        medicine.dailyUsage = 1.0
         medicine.savedTime = 1514761200000L
 
         var formattedDate:String = medicine.showFormattedDate()

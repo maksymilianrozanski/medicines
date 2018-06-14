@@ -9,15 +9,15 @@ import java.util.*
 class Medicine() : Parcelable {
     var id: Int? = null
     var name: String? = null
-    var quantity: Int? = null
-    var dailyUsage: Int? = null
+    var quantity: Double? = null
+    var dailyUsage: Double? = null
     var savedTime: Long = 0
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readValue(Int::class.java.classLoader) as? Int
         name = parcel.readString()
-        quantity = parcel.readValue(Int::class.java.classLoader) as? Int
-        dailyUsage = parcel.readValue(Int::class.java.classLoader) as? Int
+        quantity = parcel.readValue(Int::class.java.classLoader) as? Double
+        dailyUsage = parcel.readValue(Int::class.java.classLoader) as? Double
         savedTime = parcel.readLong()
     }
 
@@ -33,7 +33,7 @@ class Medicine() : Parcelable {
 
     @VisibleForTesting
     fun enoughUntil(): Long {
-        val enoughForDays: Int = quantity!!.div(dailyUsage!!)
+        val enoughForDays: Int = quantity!!.div(dailyUsage!!).toInt()
         return savedTime + enoughForDays * 86400000
     }
 

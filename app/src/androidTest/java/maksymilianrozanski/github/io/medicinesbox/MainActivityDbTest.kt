@@ -23,6 +23,7 @@ import maksymilianrozanski.github.io.medicinesbox.module.ContextModule
 import maksymilianrozanski.github.io.medicinesbox.module.DatabaseModule
 import org.hamcrest.Description
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.containsString
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Before
 import org.junit.Ignore
@@ -74,8 +75,8 @@ class MainActivityDbTest {
     fun displayingNameTest() {
         activityRule.launchActivity(null)
         onView(withId(R.id.medicineName)).check(matches(withText("Paracetamol")))
-        onView(withId(R.id.medicineQuantity)).check(matches(withText("Quantity: 10")))
-        onView(withId(R.id.medicineDailyUsage)).check(matches(withText("Daily usage: 2")))
+        onView(withId(R.id.medicineQuantity)).check(matches(withText(containsString("Quantity: 10"))))
+        onView(withId(R.id.medicineDailyUsage)).check(matches(withText(containsString("Daily usage: 2"))))
         onView(withId(R.id.enoughUntil)).check(matches(withText("Enough until: May 30, 2018")))
     }
 

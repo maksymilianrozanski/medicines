@@ -20,6 +20,7 @@ import maksymilianrozanski.github.io.medicinesbox.module.AppModule
 import maksymilianrozanski.github.io.medicinesbox.module.ContextModule
 import maksymilianrozanski.github.io.medicinesbox.module.DatabaseModule
 import maksymilianrozanski.github.io.medicinesbox.module.TimeProviderModule
+import org.hamcrest.Matchers.containsString
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
@@ -111,8 +112,8 @@ class AddEditActivitySavingTest {
         onView(withId(R.id.medicineDailyUsageEditText)).perform(typeText("2"))
 
         onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
-        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("13")))
-        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("2")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("13"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("2"))))
 
         onView(withId(R.id.saveButton)).perform(click())
 
@@ -120,8 +121,8 @@ class AddEditActivitySavingTest {
 
         var expectedMedicine = Medicine()
         expectedMedicine.name = "Paracetamol"
-        expectedMedicine.quantity = 13
-        expectedMedicine.dailyUsage = 2
+        expectedMedicine.quantity = 13.0
+        expectedMedicine.dailyUsage = 2.0
         expectedMedicine.savedTime = stoppedTime
 
         verify(mockedMedicinesDatabaseHandler).createMedicine(myArgThat(hasMedicine(expectedMedicine)))
@@ -132,8 +133,8 @@ class AddEditActivitySavingTest {
         var medicineInIntent = Medicine()
         medicineInIntent.id = 5
         medicineInIntent.name = "Paracetamol"
-        medicineInIntent.quantity = 15
-        medicineInIntent.dailyUsage = 2
+        medicineInIntent.quantity = 15.0
+        medicineInIntent.dailyUsage = 2.0
         medicineInIntent.savedTime = 1528624800000L   //10-06-2018, 12:00
         var launchIntent = Intent()
         launchIntent.putExtra(KEY_ID, medicineInIntent)
@@ -141,16 +142,16 @@ class AddEditActivitySavingTest {
         activityRule.launchActivity(launchIntent)
 
         onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
-        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("15")))
-        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("2")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("15"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("2"))))
 
         onView(withId(R.id.medicineNameEditText)).perform(replaceText("Acetaminophen"))
         onView(withId(R.id.medicineQuantityEditText)).perform(replaceText("13"))
         onView(withId(R.id.medicineDailyUsageEditText)).perform(replaceText("1"))
 
         onView(withId(R.id.medicineNameEditText)).check(matches(withText("Acetaminophen")))
-        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("13")))
-        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("1")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("13"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("1"))))
 
         onView(withId(R.id.saveButton)).perform(click())
 
@@ -158,8 +159,8 @@ class AddEditActivitySavingTest {
         var expectedMedicine = Medicine()
         expectedMedicine.id = 5
         expectedMedicine.name = "Acetaminophen"
-        expectedMedicine.quantity = 13
-        expectedMedicine.dailyUsage = 1
+        expectedMedicine.quantity = 13.0
+        expectedMedicine.dailyUsage = 1.0
         expectedMedicine.savedTime = stoppedTime
 
         verify(mockedMedicinesDatabaseHandler).updateMedicine(myArgThat(hasMedicine(expectedMedicine)))

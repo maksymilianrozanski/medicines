@@ -12,8 +12,8 @@ class TestMedicinesDatabaseHandler(context: Context) : MedicinesDatabaseHandler(
         var medicine1 = Medicine()
         medicine1.id = 3
         medicine1.name = "Paracetamol"
-        medicine1.quantity = 10
-        medicine1.dailyUsage = 2
+        medicine1.quantity = 10.0
+        medicine1.dailyUsage = 2.0
         medicine1.savedTime = 1527284036691L
 
         medicines = ArrayList<Medicine>()

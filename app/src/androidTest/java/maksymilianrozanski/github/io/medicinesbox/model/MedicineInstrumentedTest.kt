@@ -15,8 +15,8 @@ class MedicineInstrumentedTest {
         medicine.id = 5
         medicine.name = "Vitamins"
         medicine.savedTime = 1527281990668L
-        medicine.dailyUsage = 2
-        medicine.quantity = 14
+        medicine.dailyUsage = 2.0
+        medicine.quantity = 14.0
 
         var parcel: Parcel = Parcel.obtain()
         medicine.writeToParcel(parcel, 0)
@@ -37,8 +37,8 @@ class MedicineInstrumentedTest {
         medicine.id = 5
         medicine.name = "Vitamins"
         medicine.savedTime = 1514797200000L //01.01.2018    10:00:00
-        medicine.dailyUsage = 2
-        medicine.quantity = 5   //supply for 2.5 days
+        medicine.dailyUsage = 2.0
+        medicine.quantity = 5.0   //supply for 2.5 days
 
         var expectedString = "Jan 3, 2018"
         assertTrue(medicine.enoughUntilDate().equals(expectedString))
@@ -50,8 +50,8 @@ class MedicineInstrumentedTest {
         medicine.id = 5
         medicine.name = "Vitamins"
         medicine.savedTime = 1514797200000L //01.01.2018    10:00:00
-        medicine.dailyUsage = 3
-        medicine.quantity = 11  //supply for 3.67 days
+        medicine.dailyUsage = 3.0
+        medicine.quantity = 11.0  //supply for 3.67 days
 
         var expectedString = "Jan 4, 2018"
         assertTrue(medicine.enoughUntilDate().equals(expectedString))
@@ -63,8 +63,8 @@ class MedicineInstrumentedTest {
         medicine.id = 5
         medicine.name = "Vitamins"
         medicine.savedTime = 1514797200000L //01.01.2018    10:00:00
-        medicine.dailyUsage = 3
-        medicine.quantity = 14  //supply for 4.33 days
+        medicine.dailyUsage = 3.0
+        medicine.quantity = 14.0  //supply for 4.33 days
 
         var expectedString = "Jan 5, 2018"
         assertTrue(medicine.enoughUntilDate().equals(expectedString))
@@ -76,8 +76,8 @@ class MedicineInstrumentedTest {
         medicine.id = 5
         medicine.name = "Vitamins"
         medicine.savedTime = 1514797200000L //01.01.2018    9:00:00 UTC
-        medicine.dailyUsage = 2
-        medicine.quantity = 5
+        medicine.dailyUsage = 2.0
+        medicine.quantity = 5.0
 
         var expectedValue = 1514970000000L  //03.01.2018    9:00:00 UTC
         assertTrue(medicine.enoughUntil() == expectedValue)

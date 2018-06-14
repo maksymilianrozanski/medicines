@@ -58,8 +58,8 @@ class AddEditActivity : AppCompatActivity() {
     private fun saveNewMedicine() {
         var medicineToSave = Medicine()
         medicineToSave.name = medicineNameEditText.text.toString()
-        medicineToSave.quantity = medicineQuantityEditText.text.toString().toInt()
-        medicineToSave.dailyUsage = medicineDailyUsageEditText.text.toString().toInt()
+        medicineToSave.quantity = medicineQuantityEditText.text.toString().toDouble()
+        medicineToSave.dailyUsage = medicineDailyUsageEditText.text.toString().toDouble()
 
         if (medicineToSave.name.toString().isNotBlank()) {
             medicineToSave.savedTime = timeProvider.getCurrentTimeInMillis()
@@ -77,8 +77,8 @@ class AddEditActivity : AppCompatActivity() {
 
             medicineToUpdate.name = medicineNameEditText.text.toString()
             if (medicineToUpdate.name.toString().isNotBlank()) {
-                medicineToUpdate.quantity = medicineQuantityEditText.text.toString().toInt()
-                medicineToUpdate.dailyUsage = medicineDailyUsageEditText.text.toString().toInt()
+                medicineToUpdate.quantity = medicineQuantityEditText.text.toString().toDouble()
+                medicineToUpdate.dailyUsage = medicineDailyUsageEditText.text.toString().toDouble()
                 medicineToUpdate.savedTime = timeProvider.getCurrentTimeInMillis()
                 medicineToUpdate.id = medicine.id
 

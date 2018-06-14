@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity() {
         exampleMedicine.name = "Example name"
         var random = Random()
         var randomInt = random.nextInt(10)
-        exampleMedicine.quantity = randomInt
-        exampleMedicine.dailyUsage = 1
+        exampleMedicine.quantity = randomInt.toDouble()
+        exampleMedicine.dailyUsage = 1.0
         exampleMedicine.savedTime = System.currentTimeMillis()
         databaseHandler.createMedicine(exampleMedicine)
 

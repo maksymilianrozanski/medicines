@@ -1,6 +1,6 @@
 package maksymilianrozanski.github.io.medicinesbox.model
 
-val DATABASE_VERSION: Int = 1
+val DATABASE_VERSION: Int = 2
 val DATABASE_NAME: String = "medicines.db"
 val TABLE_NAME = "medicines"
 
