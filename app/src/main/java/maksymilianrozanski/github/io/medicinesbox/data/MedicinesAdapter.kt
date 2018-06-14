@@ -43,6 +43,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
         var medicineQuantity = itemView.findViewById(R.id.medicineQuantity) as TextView
         var medicineDailyUsage = itemView.findViewById(R.id.medicineDailyUsage) as TextView
         var medicineSavedTime = itemView.findViewById(R.id.medicineSaveDate) as TextView
+        var medicineEnoughUntil = itemView.findViewById(R.id.enoughUntil) as TextView
         var deleteButton  = itemView.findViewById(R.id.deleteButton) as Button
         var editButton = itemView.findViewById(R.id.editButton) as Button
 
@@ -51,6 +52,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
             medicineQuantity.text = "Quantity: ${medicine.quantity.toString()}"
             medicineDailyUsage.text = "Daily usage: ${medicine.dailyUsage.toString()}"
             medicineSavedTime.text = medicine.showFormattedDate()
+            medicineEnoughUntil.text = "Enough until: ${medicine.enoughUntilDate()}"
 
             medicineName.setOnClickListener(this)
             deleteButton.setOnClickListener(this)
