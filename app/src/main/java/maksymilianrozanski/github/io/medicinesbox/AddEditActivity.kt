@@ -49,6 +49,10 @@ class AddEditActivity : AppCompatActivity() {
                 saveEditedMedicine(medicineFromIntent)
             }
         }
+
+        cancelButton.setOnClickListener{
+            NavUtils.navigateUpFromSameTask(this)
+        }
     }
 
     private fun saveNewMedicine() {
