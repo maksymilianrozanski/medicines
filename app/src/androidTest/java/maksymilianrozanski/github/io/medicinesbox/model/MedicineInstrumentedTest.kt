@@ -71,6 +71,58 @@ class MedicineInstrumentedTest {
     }
 
     @Test
+    fun enoughUntilDateTest4(){
+        var medicine = Medicine()
+        medicine.id = 5
+        medicine.name = "Vitamins"
+        medicine.savedTime = 1514797200000L //01.01.2018    10:00:00
+        medicine.dailyUsage = 0.5
+        medicine.quantity = 2.0  //supply for 4.00 days
+
+        var expectedString = "Jan 5, 2018"
+        assertTrue(medicine.enoughUntilDate().equals(expectedString))
+    }
+
+    @Test
+    fun enoughUntilDateTest5(){
+        var medicine = Medicine()
+        medicine.id = 5
+        medicine.name = "Vitamins"
+        medicine.savedTime = 1514797200000L //01.01.2018    10:00:00
+        medicine.dailyUsage = 0.33
+        medicine.quantity = 2.0  //supply for 6.06 days
+
+        var expectedString = "Jan 7, 2018"
+        assertTrue(medicine.enoughUntilDate().equals(expectedString))
+    }
+
+    @Test
+    fun enoughUntilDateTest6(){
+        var medicine = Medicine()
+        medicine.id = 5
+        medicine.name = "Vitamins"
+        medicine.savedTime = 1514797200000L //01.01.2018    10:00:00
+        medicine.dailyUsage = 0.25
+        medicine.quantity = 0.9  //supply for 3.6 days
+
+        var expectedString = "Jan 4, 2018"
+        assertTrue(medicine.enoughUntilDate().equals(expectedString))
+    }
+
+    @Test
+    fun enoughUntilDateTest7(){
+        var medicine = Medicine()
+        medicine.id = 5
+        medicine.name = "Vitamins"
+        medicine.savedTime = 1514797200000L //01.01.2018    10:00:00
+        medicine.dailyUsage = 2.5
+        medicine.quantity = 9.0  //supply for 3.6 days
+
+        var expectedString = "Jan 4, 2018"
+        assertTrue(medicine.enoughUntilDate().equals(expectedString))
+    }
+
+    @Test
     fun enoughUntilTest() {
         var medicine = Medicine()
         medicine.id = 5
