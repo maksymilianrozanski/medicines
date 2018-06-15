@@ -49,8 +49,8 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
 
         fun bindViews(medicine: Medicine) {
             medicineName.text = medicine.name
-            medicineQuantity.text = "Quantity: ${medicine.quantity.toString()}"
-            medicineDailyUsage.text = "Daily usage: ${medicine.dailyUsage.toString()}"
+            medicineQuantity.text = "Quantity: ${String.format("%.2f", medicine.quantity)}"
+            medicineDailyUsage.text = "Daily usage: ${String.format("%.2f", medicine.dailyUsage)}"
             medicineSavedTime.text = medicine.showFormattedDate()
             medicineEnoughUntil.text = "Enough until: ${medicine.enoughUntilDate()}"
 
