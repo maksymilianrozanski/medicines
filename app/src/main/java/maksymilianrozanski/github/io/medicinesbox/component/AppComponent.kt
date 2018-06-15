@@ -9,11 +9,14 @@ import maksymilianrozanski.github.io.medicinesbox.data.MedicinesDatabaseHandler
 import maksymilianrozanski.github.io.medicinesbox.data.TimeProvider
 import maksymilianrozanski.github.io.medicinesbox.module.AppModule
 import maksymilianrozanski.github.io.medicinesbox.module.DatabaseModule
+import maksymilianrozanski.github.io.medicinesbox.module.QuantityCalculatorModule
 import maksymilianrozanski.github.io.medicinesbox.module.TimeProviderModule
+import maksymilianrozanski.github.io.medicinesbox.utilities.QuantityCalculator
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, DatabaseModule::class, TimeProviderModule::class])
+@Component(modules = [AppModule::class, DatabaseModule::class,
+    TimeProviderModule::class, QuantityCalculatorModule::class])
 interface AppComponent {
 
     fun inject(myApp: MyApp)
@@ -30,5 +33,7 @@ interface AppComponent {
     fun getDatabaseHandler(): MedicinesDatabaseHandler
 
     fun getTimeProvider(): TimeProvider
+
+    fun getQuantityCalculator(): QuantityCalculator
 
 }
