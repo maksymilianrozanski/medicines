@@ -38,8 +38,8 @@ class AddEditActivity : AppCompatActivity() {
                 && medicineFromIntent.quantity != null
                 && medicineFromIntent.dailyUsage != null) {
             medicineNameEditText.setText(medicineFromIntent.name)
-            medicineQuantityEditText.setText(medicineFromIntent.quantity!!.toString())
-            medicineDailyUsageEditText.setText(medicineFromIntent.dailyUsage!!.toString())
+            medicineQuantityEditText.setText(String.format("%.2f", medicineFromIntent.quantity))
+            medicineDailyUsageEditText.setText(String.format("%.2f", medicineFromIntent.dailyUsage))
         }
 
         saveButton.setOnClickListener {
