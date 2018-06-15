@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/quantity"
-        android:inputType="number"/>
+        android:inputType="numberDecimal"/>
 
     <TextView
         android:id="@+id/medicineDailyUsageTextView"
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/daily_usage"
-        android:inputType="number"/>
+        android:inputType="numberDecimal"/>
 
     <Button
         android:id="@+id/saveButton"
