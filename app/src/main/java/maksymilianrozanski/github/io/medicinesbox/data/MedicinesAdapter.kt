@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import maksymilianrozanski.github.io.medicinesbox.AddEditActivity
+import maksymilianrozanski.github.io.medicinesbox.MyApp
 import maksymilianrozanski.github.io.medicinesbox.R
 import maksymilianrozanski.github.io.medicinesbox.model.KEY_ID
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
@@ -39,8 +40,10 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
     inner class ViewHolder(itemView: View, context: Context, list: ArrayList<Medicine>)
         : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
+        var quantityCalculator = (context.applicationContext as MyApp).appComponent.getQuantityCalculator()
+
         var medicineName = itemView.findViewById(R.id.medicineName) as TextView
-        var medicineQuantity = itemView.findViewById(R.id.medicineQuantity) as TextView
+        var expectedQuantity = itemView.findViewById(R.id.expectedQuantity) as TextView
         var medicineDailyUsage = itemView.findViewById(R.id.medicineDailyUsage) as TextView
         var medicineSavedTime = itemView.findViewById(R.id.medicineSaveDate) as TextView
         var medicineEnoughUntil = itemView.findViewById(R.id.enoughUntil) as TextView
@@ -49,7 +52,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
 
         fun bindViews(medicine: Medicine) {
             medicineName.text = medicine.name
-            medicineQuantity.text = "Quantity: ${String.format("%.2f", medicine.quantity)}"
+            expectedQuantity.text = "Expected quantity today: ${String.format("%.2f",quantityCalculator.calculateQuantityToday(medicine))}"
             medicineDailyUsage.text = "Daily usage: ${String.format("%.2f", medicine.dailyUsage)}"
             medicineSavedTime.text = medicine.showFormattedDate()
             medicineEnoughUntil.text = "Enough until: ${medicine.enoughUntilDate()}"

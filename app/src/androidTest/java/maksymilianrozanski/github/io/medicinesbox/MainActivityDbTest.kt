@@ -75,7 +75,7 @@ class MainActivityDbTest {
     fun displayingNameTest() {
         activityRule.launchActivity(null)
         onView(withId(R.id.medicineName)).check(matches(withText("Paracetamol")))
-        onView(withId(R.id.medicineQuantity)).check(matches(withText(containsString("Quantity: 10"))))
+        onView(withId(R.id.expectedQuantity)).check(matches(withText(containsString("Expected quantity today: "))))
         onView(withId(R.id.medicineDailyUsage)).check(matches(withText(containsString("Daily usage: 2"))))
         onView(withId(R.id.enoughUntil)).check(matches(withText("Enough until: May 30, 2018")))
     }
