@@ -11,6 +11,7 @@ import maksymilianrozanski.github.io.medicinesbox.data.MedicinesDatabaseHandler
 import maksymilianrozanski.github.io.medicinesbox.data.TimeProvider
 import maksymilianrozanski.github.io.medicinesbox.model.KEY_ID
 import maksymilianrozanski.github.io.medicinesbox.model.Medicine
+import maksymilianrozanski.github.io.medicinesbox.utilities.QuantityCalculator
 import javax.inject.Inject
 
 class AddEditActivity : AppCompatActivity() {
@@ -20,6 +21,9 @@ class AddEditActivity : AppCompatActivity() {
 
     @Inject
     lateinit var timeProvider: TimeProvider
+
+    @Inject
+    lateinit var quantityCalculator: QuantityCalculator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,7 @@ class AddEditActivity : AppCompatActivity() {
                 && medicineFromIntent.quantity != null
                 && medicineFromIntent.dailyUsage != null) {
             medicineNameEditText.setText(medicineFromIntent.name)
-            medicineQuantityEditText.setText(String.format("%.2f", medicineFromIntent.quantity))
+            medicineQuantityEditText.setText(String.format("%.2f", quantityCalculator.calculateQuantityToday(medicineFromIntent)))
             medicineDailyUsageEditText.setText(String.format("%.2f", medicineFromIntent.dailyUsage))
         }
 
