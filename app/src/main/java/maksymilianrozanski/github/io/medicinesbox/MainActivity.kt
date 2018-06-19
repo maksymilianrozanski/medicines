@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import maksymilianrozanski.github.io.medicinesbox.component.MainActivityComponent
 import maksymilianrozanski.github.io.medicinesbox.data.MedicinesAdapter
@@ -67,9 +66,6 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
-            R.id.addExampleItem -> {
-                addExampleItem(); return true
-            }
             R.id.addNewItem -> {
                 runNewItemActivity(); return true
             }
@@ -81,20 +77,5 @@ class MainActivity : AppCompatActivity() {
     fun runNewItemActivity() {
         var intent = Intent(this, AddEditActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun addExampleItem() {
-        var exampleMedicine = Medicine()
-        exampleMedicine.name = "Example name"
-        var random = Random()
-        var randomInt = random.nextInt(10)
-        exampleMedicine.quantity = randomInt.toDouble()
-        exampleMedicine.dailyUsage = 1.0
-        exampleMedicine.savedTime = System.currentTimeMillis()
-        databaseHandler.createMedicine(exampleMedicine)
-
-        reloadAdapterDataFromDb()
-
-        Toast.makeText(this, "Adding new example item", Toast.LENGTH_SHORT).show()
     }
 }

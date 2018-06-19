@@ -9,10 +9,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/addExampleItem"
-        android:title="Add example item" />
-
-    <item
         android:id="@+id/addNewItem"
         android:title="@string/add_new_item" />
 </menu>
