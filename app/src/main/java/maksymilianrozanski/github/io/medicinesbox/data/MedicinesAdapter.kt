@@ -32,7 +32,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
         holder.bindViews(list[position])
     }
 
-    fun setList( newList: ArrayList<Medicine>){
+    fun setList(newList: ArrayList<Medicine>) {
         this.list = newList
         notifyDataSetChanged()
     }
@@ -46,20 +46,26 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
         var expectedQuantity = itemView.findViewById(R.id.expectedQuantity) as TextView
         var medicineDailyUsage = itemView.findViewById(R.id.medicineDailyUsage) as TextView
         var medicineSavedTime = itemView.findViewById(R.id.medicineSaveDate) as TextView
-        var medicineEnoughUntil = itemView.findViewById(R.id.enoughUntil) as TextView
-        var deleteButton  = itemView.findViewById(R.id.deleteButton) as Button
+        var deleteButton = itemView.findViewById(R.id.deleteButton) as Button
         var editButton = itemView.findViewById(R.id.editButton) as Button
 
         fun bindViews(medicine: Medicine) {
             medicineName.text = medicine.name
-            expectedQuantity.text = "Expected quantity today: ${String.format("%.2f",quantityCalculator.calculateQuantityToday(medicine))}"
+            expectedQuantity.text = "Expected quantity today: ${String.format("%.2f", quantityCalculator.calculateQuantityToday(medicine))}"
             medicineDailyUsage.text = "Daily usage: ${String.format("%.2f", medicine.dailyUsage)}"
             medicineSavedTime.text = medicine.showFormattedDate()
-            medicineEnoughUntil.text = "Enough until: ${medicine.enoughUntilDate()}"
-
+            setMedicineEnoughUntil(medicine)
             medicineName.setOnClickListener(this)
             deleteButton.setOnClickListener(this)
             editButton.setOnClickListener(this)
+        }
+
+        private fun setMedicineEnoughUntil(medicine: Medicine) {
+            var medicineEnoughUntil = itemView.findViewById(R.id.enoughUntil) as TextView
+            if (medicine.dailyUsage?.equals(0)!!) {
+                medicineEnoughUntil.text = "Daily usage is 0."
+            } else
+                medicineEnoughUntil.text = "Enough until: ${medicine.enoughUntilDate()}"
         }
 
         override fun onClick(view: View?) {
@@ -73,7 +79,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
                     notifyItemRemoved(adapterPosition)
                 }
                 view?.id == editButton.id -> {
-                    Toast.makeText(context, "Clicked edit button, medicine id: ${medicine.id}",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Clicked edit button, medicine id: ${medicine.id}", Toast.LENGTH_SHORT).show()
                     var intent = Intent(context, AddEditActivity::class.java)
                     intent.putExtra(KEY_ID, medicine)
                     context.startActivity(intent)
@@ -82,7 +88,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
             }
         }
 
-        private fun deleteItem(id: Int){
+        private fun deleteItem(id: Int) {
             var databaseHandler = MedicinesDatabaseHandler(context)
             databaseHandler.deleteMedicine(id)
         }

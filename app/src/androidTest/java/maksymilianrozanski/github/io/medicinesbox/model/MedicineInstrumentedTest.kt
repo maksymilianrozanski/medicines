@@ -71,7 +71,7 @@ class MedicineInstrumentedTest {
     }
 
     @Test
-    fun enoughUntilDateTest4(){
+    fun enoughUntilDateTest4() {
         var medicine = Medicine()
         medicine.id = 5
         medicine.name = "Vitamins"
@@ -84,7 +84,7 @@ class MedicineInstrumentedTest {
     }
 
     @Test
-    fun enoughUntilDateTest5(){
+    fun enoughUntilDateTest5() {
         var medicine = Medicine()
         medicine.id = 5
         medicine.name = "Vitamins"
@@ -97,7 +97,7 @@ class MedicineInstrumentedTest {
     }
 
     @Test
-    fun enoughUntilDateTest6(){
+    fun enoughUntilDateTest6() {
         var medicine = Medicine()
         medicine.id = 5
         medicine.name = "Vitamins"
@@ -110,7 +110,7 @@ class MedicineInstrumentedTest {
     }
 
     @Test
-    fun enoughUntilDateTest7(){
+    fun enoughUntilDateTest7() {
         var medicine = Medicine()
         medicine.id = 5
         medicine.name = "Vitamins"
@@ -133,5 +133,19 @@ class MedicineInstrumentedTest {
 
         var expectedValue = 1514970000000L  //03.01.2018    9:00:00 UTC
         assertTrue(medicine.enoughUntil() == expectedValue)
+    }
+
+    @Test
+    fun enoughUntilDivByZeroTest() {
+        var medicine = Medicine()
+        medicine.id = 5
+        medicine.name = "Vitamins"
+        medicine.savedTime = 1514797200000L //01.01.2018    9:00:00 UTC
+        medicine.dailyUsage = 0.0
+        medicine.quantity = 5.0
+
+        var expectedValue = medicine.savedTime //01.01.2018    9:00:00 UTC
+        assertTrue(medicine.enoughUntil() == expectedValue)
+
     }
 }

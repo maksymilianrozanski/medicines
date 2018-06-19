@@ -33,8 +33,9 @@ class Medicine() : Parcelable {
 
     @VisibleForTesting
     fun enoughUntil(): Long {
-        val enoughForDays: Int = quantity!!.div(dailyUsage!!).toInt()
-        return savedTime + enoughForDays * 86400000
+        if (dailyUsage == 0.0) return savedTime
+        val enoughForDays: Int = (quantity!!/dailyUsage!!).toInt()
+        return (savedTime + enoughForDays * 86400000L)
     }
 
     override fun toString(): String {
