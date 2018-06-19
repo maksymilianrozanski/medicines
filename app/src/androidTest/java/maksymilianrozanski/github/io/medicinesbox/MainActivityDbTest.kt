@@ -105,4 +105,11 @@ class MainActivityDbTest {
         }
         ))
     }
+
+    @Test
+    fun deletionConfirmationDialogTest() {
+        activityRule.launchActivity(null)
+        onView(withId(R.id.deleteButton)).perform(click())
+        onView(withText(containsString("Are you sure you want to delete"))).check(matches(isDisplayed()))
+    }
 }

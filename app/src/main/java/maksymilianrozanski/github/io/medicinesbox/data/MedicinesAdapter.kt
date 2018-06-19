@@ -1,5 +1,6 @@
 package maksymilianrozanski.github.io.medicinesbox.data
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -73,10 +74,8 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
 
             when {
                 view?.id == deleteButton.id -> {
-                    Toast.makeText(context, "Clicked delete button, Deleting! : ${medicine.id}", Toast.LENGTH_SHORT).show()
-                    list.removeAt(adapterPosition)
-                    deleteItem(medicine.id!!)
-                    notifyItemRemoved(adapterPosition)
+                    var alertDialog = deletionAlertDialog(context, medicine)
+                    alertDialog.show()
                 }
                 view?.id == editButton.id -> {
                     Toast.makeText(context, "Clicked edit button, medicine id: ${medicine.id}", Toast.LENGTH_SHORT).show()
@@ -86,6 +85,21 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
                 }
                 else -> Toast.makeText(context, "Clicked something else", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        private fun deletionAlertDialog(context: Context, medicine: Medicine): AlertDialog {
+            return AlertDialog.Builder(context)
+                    .setTitle("Delete")
+                    .setMessage("Are you sure you want to delete ${medicine.name}?")
+                    .setPositiveButton("Delete") { _, _ ->
+                        run {
+                            list.removeAt(adapterPosition)
+                            deleteItem(medicine.id!!)
+                            notifyItemRemoved(adapterPosition)
+                        }
+                    }
+                    .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+                    .create()
         }
 
         private fun deleteItem(id: Int) {
