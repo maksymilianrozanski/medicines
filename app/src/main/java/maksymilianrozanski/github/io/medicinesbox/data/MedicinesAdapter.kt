@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import maksymilianrozanski.github.io.medicinesbox.AddEditActivity
 import maksymilianrozanski.github.io.medicinesbox.MyApp
 import maksymilianrozanski.github.io.medicinesbox.R
@@ -76,12 +75,10 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
                     alertDialog.show()
                 }
                 view?.id == editButton.id -> {
-                    Toast.makeText(context, "Clicked edit button, medicine id: ${medicine.id}", Toast.LENGTH_SHORT).show()
                     var intent = Intent(context, AddEditActivity::class.java)
                     intent.putExtra(KEY_ID, medicine)
                     context.startActivity(intent)
                 }
-                else -> Toast.makeText(context, "Clicked something else", Toast.LENGTH_SHORT).show()
             }
         }
 

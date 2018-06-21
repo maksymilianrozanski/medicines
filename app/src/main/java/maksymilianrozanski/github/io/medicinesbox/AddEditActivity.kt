@@ -68,7 +68,6 @@ class AddEditActivity : AppCompatActivity() {
         if (medicineToSave.name.toString().isNotBlank()) {
             medicineToSave.savedTime = timeProvider.getCurrentTimeInMillis()
             databaseHandler.createMedicine(medicineToSave)
-            Toast.makeText(this, "Saving new medicine.", Toast.LENGTH_SHORT).show()
             NavUtils.navigateUpFromSameTask(this)
         } else {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
@@ -87,7 +86,6 @@ class AddEditActivity : AppCompatActivity() {
                 medicineToUpdate.id = medicine.id
 
                 databaseHandler.updateMedicine(medicineToUpdate)
-                Toast.makeText(this, "Updating medicine, id: ${medicineToUpdate.id}", Toast.LENGTH_SHORT).show()
                 NavUtils.navigateUpFromSameTask(this)
             }
         } else {
