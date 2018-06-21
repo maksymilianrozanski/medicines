@@ -30,11 +30,6 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/medicineSaveDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
             android:id="@+id/enoughUntil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
