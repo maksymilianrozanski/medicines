@@ -213,4 +213,130 @@ class AddEditActivitySavingTest {
 
         verify(mockedMedicinesDatabaseHandler).updateMedicine(myArgThat(hasMedicine(expectedMedicine)))
     }
+
+    @Test
+    fun savingEditedMedicineBlankQuantityEditTextTest() {
+        val medicineInIntent = Medicine()
+        medicineInIntent.id = 5
+        medicineInIntent.name = "Paracetamol"
+        medicineInIntent.quantity = 15.0
+        medicineInIntent.dailyUsage = 2.0
+        medicineInIntent.savedTime = 1528624800000L   //10-06-2018, 12:00
+        val launchIntent = Intent()
+        launchIntent.putExtra(KEY_ID, medicineInIntent)
+
+        activityRule.launchActivity(launchIntent)
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("11"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("2"))))
+
+        onView(withId(R.id.medicineNameEditText)).perform(replaceText("Acetaminophen"))
+        onView(withId(R.id.medicineQuantityEditText)).perform(replaceText(""))
+        onView(withId(R.id.medicineDailyUsageEditText)).perform(replaceText("1"))
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Acetaminophen")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("1"))))
+
+        onView(withId(R.id.saveButton)).perform(click())
+
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(hasErrorText(containsString("cannot"))))
+    }
+
+    @Test
+    fun savingEditedMedicineEmptyNameEditTextTest() {
+        val medicineInIntent = Medicine()
+        medicineInIntent.id = 5
+        medicineInIntent.name = "Paracetamol"
+        medicineInIntent.quantity = 15.0
+        medicineInIntent.dailyUsage = 2.0
+        medicineInIntent.savedTime = 1528624800000L   //10-06-2018, 12:00
+        val launchIntent = Intent()
+        launchIntent.putExtra(KEY_ID, medicineInIntent)
+
+        activityRule.launchActivity(launchIntent)
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("11"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("2"))))
+
+        onView(withId(R.id.medicineNameEditText)).perform(replaceText(" "))
+        onView(withId(R.id.medicineQuantityEditText)).perform(replaceText("10"))
+        onView(withId(R.id.medicineDailyUsageEditText)).perform(replaceText("1"))
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText(" ")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("10"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("1"))))
+
+        onView(withId(R.id.saveButton)).perform(click())
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(hasErrorText(containsString("cannot"))))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("10"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("1"))))
+    }
+
+    @Test
+    fun saveEditedMedicineBlankNameEditTextTest() {
+        val medicineInIntent = Medicine()
+        medicineInIntent.id = 5
+        medicineInIntent.name = "Paracetamol"
+        medicineInIntent.quantity = 15.0
+        medicineInIntent.dailyUsage = 2.0
+        medicineInIntent.savedTime = 1528624800000L   //10-06-2018, 12:00
+        val launchIntent = Intent()
+        launchIntent.putExtra(KEY_ID, medicineInIntent)
+
+        activityRule.launchActivity(launchIntent)
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("11"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("2"))))
+
+        onView(withId(R.id.medicineNameEditText)).perform(replaceText(""))
+        onView(withId(R.id.medicineQuantityEditText)).perform(replaceText("10"))
+        onView(withId(R.id.medicineDailyUsageEditText)).perform(replaceText("1"))
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("10"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("1"))))
+
+        onView(withId(R.id.saveButton)).perform(click())
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(hasErrorText(containsString("cannot"))))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("10"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("1"))))
+    }
+
+    @Test
+    fun saveEditedMedicineBlankDailyUsageEditText() {
+        val medicineInIntent = Medicine()
+        medicineInIntent.id = 5
+        medicineInIntent.name = "Paracetamol"
+        medicineInIntent.quantity = 15.0
+        medicineInIntent.dailyUsage = 2.0
+        medicineInIntent.savedTime = 1528624800000L   //10-06-2018, 12:00
+        val launchIntent = Intent()
+        launchIntent.putExtra(KEY_ID, medicineInIntent)
+
+        activityRule.launchActivity(launchIntent)
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("11"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText(containsString("2"))))
+
+        onView(withId(R.id.medicineNameEditText)).perform(replaceText("Acetaminophen"))
+        onView(withId(R.id.medicineQuantityEditText)).perform(replaceText("10"))
+        onView(withId(R.id.medicineDailyUsageEditText)).perform(replaceText(""))
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Acetaminophen")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("10"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("")))
+
+        onView(withId(R.id.saveButton)).perform(click())
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Acetaminophen")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("10"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(hasErrorText(containsString("cannot"))))
+    }
 }

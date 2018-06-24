@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import io.github.maksymilianrozanski.medicinesbox.component.AddEditActivityComponent
 import io.github.maksymilianrozanski.medicinesbox.data.MedicinesDatabaseHandler
 import io.github.maksymilianrozanski.medicinesbox.data.TimeProvider
@@ -73,21 +72,17 @@ class AddEditActivity : AppCompatActivity() {
     }
 
     private fun saveEditedMedicine(medicine: Medicine) {
-        if (medicine.id != null) {
+        if (medicine.id != null && isUserInputValid()) {
             var medicineToUpdate = Medicine()
 
             medicineToUpdate.name = medicineNameEditText.text.toString()
-            if (medicineToUpdate.name.toString().isNotBlank()) {
-                medicineToUpdate.quantity = medicineQuantityEditText.text.toString().toDouble()
-                medicineToUpdate.dailyUsage = medicineDailyUsageEditText.text.toString().toDouble()
-                medicineToUpdate.savedTime = timeProvider.getCurrentTimeInMillis()
-                medicineToUpdate.id = medicine.id
+            medicineToUpdate.quantity = medicineQuantityEditText.text.toString().toDouble()
+            medicineToUpdate.dailyUsage = medicineDailyUsageEditText.text.toString().toDouble()
+            medicineToUpdate.savedTime = timeProvider.getCurrentTimeInMillis()
+            medicineToUpdate.id = medicine.id
 
-                databaseHandler.updateMedicine(medicineToUpdate)
-                NavUtils.navigateUpFromSameTask(this)
-            }
-        } else {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+            databaseHandler.updateMedicine(medicineToUpdate)
+            NavUtils.navigateUpFromSameTask(this)
         }
     }
 
