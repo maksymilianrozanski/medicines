@@ -6,8 +6,7 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.*
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.test.mock.MockContext
@@ -126,6 +125,55 @@ class AddEditActivitySavingTest {
         expectedMedicine.savedTime = stoppedTime
 
         verify(mockedMedicinesDatabaseHandler).createMedicine(myArgThat(hasMedicine(expectedMedicine)))
+    }
+
+    @Test
+    fun savingNewMedicineEmptyEditTextTest1() {
+        activityRule.launchActivity(null)
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("")))
+
+        onView(withId(R.id.medicineNameEditText)).perform(typeText("Paracetamol"))
+        onView(withId(R.id.medicineQuantityEditText)).perform(typeText("13"))
+
+        onView(withId(R.id.saveButton)).perform(click())
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("13"))))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(hasErrorText(containsString("cannot"))))
+    }
+
+    @Test
+    fun savingNewMedicineEmptyEditTextTest2() {
+        activityRule.launchActivity(null)
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("")))
+
+        onView(withId(R.id.medicineNameEditText)).perform(typeText("Paracetamol"))
+
+        onView(withId(R.id.saveButton)).perform(click())
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("Paracetamol")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(hasErrorText(containsString("cannot"))))
+    }
+
+    @Test
+    fun savingNewMedicineEmptyEditText3() {
+        activityRule.launchActivity(null)
+        onView(withId(R.id.medicineNameEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText("")))
+        onView(withId(R.id.medicineDailyUsageEditText)).check(matches(withText("")))
+
+        onView(withId(R.id.medicineQuantityEditText)).perform(typeText("13"))
+        onView(withId(R.id.medicineDailyUsageEditText)).perform(typeText("2"))
+
+        onView(withId(R.id.saveButton)).perform(click())
+
+        onView(withId(R.id.medicineNameEditText)).check(matches(hasErrorText(containsString("cannot"))))
+        onView(withId(R.id.medicineQuantityEditText)).perform(typeText("13"))
+        onView(withId(R.id.medicineDailyUsageEditText)).perform(typeText("2"))
     }
 
     @Test

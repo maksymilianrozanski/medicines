@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_add_edit.*
 import io.github.maksymilianrozanski.medicinesbox.component.AddEditActivityComponent
 import io.github.maksymilianrozanski.medicinesbox.data.MedicinesDatabaseHandler
 import io.github.maksymilianrozanski.medicinesbox.data.TimeProvider
 import io.github.maksymilianrozanski.medicinesbox.model.KEY_ID
 import io.github.maksymilianrozanski.medicinesbox.model.Medicine
 import io.github.maksymilianrozanski.medicinesbox.utilities.QuantityCalculator
+import kotlinx.android.synthetic.main.activity_add_edit.*
 import javax.inject.Inject
 
 class AddEditActivity : AppCompatActivity() {
@@ -54,23 +54,21 @@ class AddEditActivity : AppCompatActivity() {
             }
         }
 
-        cancelButton.setOnClickListener{
+        cancelButton.setOnClickListener {
             NavUtils.navigateUpFromSameTask(this)
         }
     }
 
     private fun saveNewMedicine() {
-        var medicineToSave = Medicine()
-        medicineToSave.name = medicineNameEditText.text.toString()
-        medicineToSave.quantity = medicineQuantityEditText.text.toString().toDouble()
-        medicineToSave.dailyUsage = medicineDailyUsageEditText.text.toString().toDouble()
+        if (isUserInputValid()) {
+            var medicineToSave = Medicine()
+            medicineToSave.name = medicineNameEditText.text.toString()
+            medicineToSave.quantity = medicineQuantityEditText.text.toString().toDouble()
+            medicineToSave.dailyUsage = medicineDailyUsageEditText.text.toString().toDouble()
 
-        if (medicineToSave.name.toString().isNotBlank()) {
             medicineToSave.savedTime = timeProvider.getCurrentTimeInMillis()
             databaseHandler.createMedicine(medicineToSave)
             NavUtils.navigateUpFromSameTask(this)
-        } else {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -91,5 +89,27 @@ class AddEditActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun isUserInputValid(): Boolean {
+        val medicineName = medicineNameEditText.text.toString()
+        val medicineQuantity = medicineQuantityEditText.text.toString()
+        val medicineDailyUsage = medicineDailyUsageEditText.text.toString()
+
+        if (medicineName.isBlank()) {
+            medicineNameEditText.error = getString(R.string.medicine_name_cannot_be_blank)
+            return false
+        }
+
+        if (medicineQuantity.isBlank()) {
+            medicineQuantityEditText.error = getString(R.string.quantity_cannot_be_blank)
+            return false
+        }
+
+        if (medicineDailyUsage.isBlank()) {
+            medicineDailyUsageEditText.error = getString(R.string.daily_usage_cannot_be_blank)
+            return false
+        }
+        return true
     }
 }

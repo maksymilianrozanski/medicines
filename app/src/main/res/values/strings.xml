@@ -7,4 +7,7 @@
     <string name="daily_usage">Daily usage</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="medicine_name_cannot_be_blank">Medicine name cannot be blank.</string>
+    <string name="quantity_cannot_be_blank">Quantity cannot be blank.</string>
+    <string name="daily_usage_cannot_be_blank">Daily usage cannot be blank.</string>
 </resources>
