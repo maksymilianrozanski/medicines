@@ -55,7 +55,10 @@ class AddEditActivity : AppCompatActivity() {
         }
 
         cancelButton.setOnClickListener { NavUtils.navigateUpFromSameTask(this) }
-        addMoreMedicineButton.setOnClickListener { displayAddingQuantityViews() }
+        addMoreMedicineButton.setOnClickListener {
+            displayAddingQuantityViews()
+            amountOfMedicineToAddEditText.requestFocus()
+        }
         acceptQuantityButton.setOnClickListener {
             increaseQuantity()
             hideAddingQuantityViews()
