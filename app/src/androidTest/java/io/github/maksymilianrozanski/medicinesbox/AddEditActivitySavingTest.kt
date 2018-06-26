@@ -20,6 +20,7 @@ import io.github.maksymilianrozanski.medicinesbox.module.ContextModule
 import io.github.maksymilianrozanski.medicinesbox.module.DatabaseModule
 import io.github.maksymilianrozanski.medicinesbox.module.TimeProviderModule
 import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
@@ -338,5 +339,40 @@ class AddEditActivitySavingTest {
         onView(withId(R.id.medicineNameEditText)).check(matches(withText("Acetaminophen")))
         onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("10"))))
         onView(withId(R.id.medicineDailyUsageEditText)).check(matches(hasErrorText(containsString("cannot"))))
+    }
+
+    @Test
+    fun displayingAndHidingAddQuantityViews() {
+        val medicineInIntent = Medicine()
+        medicineInIntent.id = 5
+        medicineInIntent.name = "Paracetamol"
+        medicineInIntent.quantity = 15.0
+        medicineInIntent.dailyUsage = 2.0
+        medicineInIntent.savedTime = 1528624800000L   //10-06-2018, 12:00
+        val launchIntent = Intent()
+        launchIntent.putExtra(KEY_ID, medicineInIntent)
+
+        activityRule.launchActivity(launchIntent)
+
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(isDisplayed()))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("11"))))
+        onView(withId(R.id.addMoreMedicineButton)).check(matches(isDisplayed()))
+        onView(withId(R.id.amountOfMedicineToAddEditText)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.acceptQuantityButton)).check(matches(not(isDisplayed())))
+
+        onView(withId(R.id.addMoreMedicineButton)).perform(click())
+
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.addMoreMedicineButton)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.amountOfMedicineToAddEditText)).check(matches(isDisplayed()))
+        onView(withId(R.id.acceptQuantityButton)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.acceptQuantityButton)).perform(click())
+
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(isDisplayed()))
+        onView(withId(R.id.addMoreMedicineButton)).check(matches(isDisplayed()))
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(withText(containsString("11"))))
+        onView(withId(R.id.amountOfMedicineToAddEditText)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.acceptQuantityButton)).check(matches(not(isDisplayed())))
     }
 }

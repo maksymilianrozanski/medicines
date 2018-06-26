@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import io.github.maksymilianrozanski.medicinesbox.component.AddEditActivityComponent
 import io.github.maksymilianrozanski.medicinesbox.data.MedicinesDatabaseHandler
 import io.github.maksymilianrozanski.medicinesbox.data.TimeProvider
@@ -53,9 +54,9 @@ class AddEditActivity : AppCompatActivity() {
             }
         }
 
-        cancelButton.setOnClickListener {
-            NavUtils.navigateUpFromSameTask(this)
-        }
+        cancelButton.setOnClickListener { NavUtils.navigateUpFromSameTask(this) }
+        addMoreMedicineButton.setOnClickListener { displayAddingQuantityViews() }
+        acceptQuantityButton.setOnClickListener { hideAddingQuantityViews() }
     }
 
     private fun saveNewMedicine() {
@@ -106,5 +107,19 @@ class AddEditActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    private fun displayAddingQuantityViews() {
+        medicineQuantityEditText.visibility = View.GONE
+        addMoreMedicineButton.visibility = View.GONE
+        amountOfMedicineToAddEditText.visibility = View.VISIBLE
+        acceptQuantityButton.visibility = View.VISIBLE
+    }
+
+    private fun hideAddingQuantityViews() {
+        medicineQuantityEditText.visibility = View.VISIBLE
+        addMoreMedicineButton.visibility = View.VISIBLE
+        amountOfMedicineToAddEditText.visibility = View.GONE
+        acceptQuantityButton.visibility = View.GONE
     }
 }
