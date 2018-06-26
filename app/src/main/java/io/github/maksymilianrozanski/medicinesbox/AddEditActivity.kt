@@ -56,7 +56,10 @@ class AddEditActivity : AppCompatActivity() {
 
         cancelButton.setOnClickListener { NavUtils.navigateUpFromSameTask(this) }
         addMoreMedicineButton.setOnClickListener { displayAddingQuantityViews() }
-        acceptQuantityButton.setOnClickListener { hideAddingQuantityViews() }
+        acceptQuantityButton.setOnClickListener {
+            increaseQuantity()
+            hideAddingQuantityViews()
+        }
     }
 
     private fun saveNewMedicine() {
@@ -121,5 +124,19 @@ class AddEditActivity : AppCompatActivity() {
         addMoreMedicineButton.visibility = View.VISIBLE
         amountOfMedicineToAddEditText.visibility = View.GONE
         acceptQuantityButton.visibility = View.GONE
+    }
+
+    private fun increaseQuantity() {
+        var currentQuantity: Double = if (medicineQuantityEditText.text.isNotBlank()) {
+            medicineQuantityEditText.text.toString().toDouble()
+        } else 0.0
+        val quantityToAdd: Double = if (amountOfMedicineToAddEditText.text.isNotBlank()) {
+            amountOfMedicineToAddEditText.text.toString().toDouble()
+        } else 0.0
+
+        currentQuantity += quantityToAdd
+
+        medicineQuantityEditText.setText(currentQuantity.toString())
+        amountOfMedicineToAddEditText.setText("")
     }
 }

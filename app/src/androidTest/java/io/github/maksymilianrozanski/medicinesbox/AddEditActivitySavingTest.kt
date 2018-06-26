@@ -375,4 +375,67 @@ class AddEditActivitySavingTest {
         onView(withId(R.id.amountOfMedicineToAddEditText)).check(matches(not(isDisplayed())))
         onView(withId(R.id.acceptQuantityButton)).check(matches(not(isDisplayed())))
     }
+
+    @Test
+    fun increasingQuantityTest() {
+        val medicineInIntent = Medicine()
+        medicineInIntent.id = 5
+        medicineInIntent.name = "Paracetamol"
+        medicineInIntent.quantity = 15.0
+        medicineInIntent.dailyUsage = 2.0
+        medicineInIntent.savedTime = 1528624800000L   //10-06-2018, 12:00
+        val launchIntent = Intent()
+        launchIntent.putExtra(KEY_ID, medicineInIntent)
+
+        activityRule.launchActivity(launchIntent)
+
+        onView(withId(R.id.medicineQuantityEditText))
+                .check(matches(isDisplayed()))
+                .check(matches(withText(containsString("11"))))
+        onView(withId(R.id.addMoreMedicineButton)).check(matches(isDisplayed()))
+        onView(withId(R.id.amountOfMedicineToAddEditText)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.acceptQuantityButton)).check(matches(not(isDisplayed())))
+
+        onView(withId(R.id.addMoreMedicineButton)).perform(click())
+
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.addMoreMedicineButton)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.amountOfMedicineToAddEditText)).check(matches(isDisplayed()))
+        onView(withId(R.id.acceptQuantityButton)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.amountOfMedicineToAddEditText))
+                .perform(click())
+                .perform(replaceText("2.5"))
+        onView(withId(R.id.acceptQuantityButton)).perform(click())
+
+        onView(withId(R.id.medicineQuantityEditText))
+                .check(matches(isDisplayed()))
+                .check(matches(withText(containsString("13.5"))))
+        onView(withId(R.id.addMoreMedicineButton)).check(matches(isDisplayed()))
+        onView(withId(R.id.amountOfMedicineToAddEditText)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.acceptQuantityButton)).check(matches(not(isDisplayed())))
+
+        onView(withId(R.id.addMoreMedicineButton)).perform(click())
+        onView(withId(R.id.amountOfMedicineToAddEditText))
+                .check(matches(isDisplayed()))
+                .check(matches(withText("")))
+    }
+
+    @Test
+    fun increasingQuantityEmptyEditTextsTest() {
+        activityRule.launchActivity(null)
+
+        onView(withId(R.id.medicineQuantityEditText))
+                .check(matches(isDisplayed()))
+                .check(matches(withText("")))
+        onView(withId(R.id.addMoreMedicineButton)).perform(click())
+        onView(withId(R.id.medicineQuantityEditText)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.amountOfMedicineToAddEditText))
+                .check(matches(isDisplayed()))
+                .check(matches(withText("")))
+        onView(withId(R.id.acceptQuantityButton)).perform(click())
+        onView(withId(R.id.medicineQuantityEditText))
+                .check(matches(isDisplayed()))
+                .check(matches(withText(containsString("0"))))
+    }
 }
