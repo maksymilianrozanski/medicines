@@ -11,6 +11,7 @@ import io.github.maksymilianrozanski.medicinesbox.data.TimeProvider
 import io.github.maksymilianrozanski.medicinesbox.model.KEY_ID
 import io.github.maksymilianrozanski.medicinesbox.model.Medicine
 import io.github.maksymilianrozanski.medicinesbox.utilities.QuantityCalculator
+import io.github.maksymilianrozanski.medicinesbox.utilities.getDoubleFromString
 import kotlinx.android.synthetic.main.activity_add_edit.*
 import javax.inject.Inject
 
@@ -83,8 +84,8 @@ class AddEditActivity : AppCompatActivity() {
             var medicineToUpdate = Medicine()
 
             medicineToUpdate.name = medicineNameEditText.text.toString()
-            medicineToUpdate.quantity = medicineQuantityEditText.text.toString().toDouble()
-            medicineToUpdate.dailyUsage = medicineDailyUsageEditText.text.toString().toDouble()
+            medicineToUpdate.quantity = getDoubleFromString(medicineQuantityEditText.text.toString())
+            medicineToUpdate.dailyUsage = getDoubleFromString(medicineDailyUsageEditText.text.toString())
             medicineToUpdate.savedTime = timeProvider.getCurrentTimeInMillis()
             medicineToUpdate.id = medicine.id
 
@@ -131,7 +132,7 @@ class AddEditActivity : AppCompatActivity() {
 
     private fun increaseQuantity() {
         var currentQuantity: Double = if (medicineQuantityEditText.text.isNotBlank()) {
-            medicineQuantityEditText.text.toString().toDouble()
+            getDoubleFromString(medicineQuantityEditText.text.toString())
         } else 0.0
         val quantityToAdd: Double = if (amountOfMedicineToAddEditText.text.isNotBlank()) {
             amountOfMedicineToAddEditText.text.toString().toDouble()
@@ -139,7 +140,7 @@ class AddEditActivity : AppCompatActivity() {
 
         currentQuantity += quantityToAdd
 
-        medicineQuantityEditText.setText(currentQuantity.toString())
+        medicineQuantityEditText.setText(String.format("%.2f",currentQuantity))
         amountOfMedicineToAddEditText.setText("")
     }
 }
