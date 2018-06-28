@@ -2,14 +2,14 @@ package io.github.maksymilianrozanski.medicinesbox
 
 import android.content.Context
 import android.content.Intent
+import android.provider.CalendarContract
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.intent.Intents.intended
 import android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName
-import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import android.support.test.espresso.intent.matcher.IntentMatchers.toPackage
+import android.support.test.espresso.intent.matcher.IntentMatchers.*
 import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.runner.AndroidJUnit4
@@ -111,5 +111,19 @@ class MainActivityDbTest {
         activityRule.launchActivity(null)
         onView(withId(R.id.deleteButton)).perform(click())
         onView(withText(containsString("Are you sure you want to delete"))).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun calendarIntentTest() {
+        activityRule.launchActivity(null)
+        onView(withId(R.id.calendarIntentButton)).check(matches(isDisplayed()))
+        val medicine = testAppComponent.getDatabaseHandler().readMedicines()[0]
+        stubAllIntents()
+        onView(withId(R.id.calendarIntentButton)).perform(click())
+        intended(allOf(hasAction(Intent.ACTION_INSERT)
+                , hasExtra(CalendarContract.Events.TITLE
+                , "${activityRule.activity.applicationContext.getString(R.string.last_day_of)} Paracetamol ${activityRule.activity.applicationContext.getString((R.string.supply))}.")
+                , hasExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                , hasExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, medicine.enoughUntil())))
     }
 }

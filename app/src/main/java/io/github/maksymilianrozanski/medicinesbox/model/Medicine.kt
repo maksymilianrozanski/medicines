@@ -2,7 +2,6 @@ package io.github.maksymilianrozanski.medicinesbox.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.annotation.VisibleForTesting
 import java.text.DateFormat
 import java.util.*
 
@@ -31,7 +30,6 @@ class Medicine() : Parcelable {
         return dateFormat.format(Date(enoughUntil()).time)
     }
 
-    @VisibleForTesting
     fun enoughUntil(): Long {
         if (dailyUsage == 0.0) return savedTime
         val enoughForDays: Int = (quantity!!/dailyUsage!!).toInt()

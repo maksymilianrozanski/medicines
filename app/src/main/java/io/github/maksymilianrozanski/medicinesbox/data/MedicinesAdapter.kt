@@ -3,6 +3,7 @@ package io.github.maksymilianrozanski.medicinesbox.data
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.provider.CalendarContract
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
         var medicineDailyUsage = itemView.findViewById(R.id.medicineDailyUsage) as TextView
         var deleteButton = itemView.findViewById(R.id.deleteButton) as Button
         var editButton = itemView.findViewById(R.id.editButton) as Button
+        var calendarIntentButton = itemView.findViewById(R.id.calendarIntentButton) as Button
 
         fun bindViews(medicine: Medicine) {
             medicineName.text = medicine.name
@@ -56,6 +58,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
             medicineName.setOnClickListener(this)
             deleteButton.setOnClickListener(this)
             editButton.setOnClickListener(this)
+            calendarIntentButton.setOnClickListener(this)
         }
 
         private fun setMedicineEnoughUntil(medicine: Medicine) {
@@ -79,6 +82,9 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
                     intent.putExtra(KEY_ID, medicine)
                     context.startActivity(intent)
                 }
+                view?.id == calendarIntentButton.id -> {
+                    sendCalendarIntent(medicine, context)
+                }
             }
         }
 
@@ -100,6 +106,20 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
         private fun deleteItem(id: Int) {
             var databaseHandler = MedicinesDatabaseHandler(context)
             databaseHandler.deleteMedicine(id)
+        }
+
+        private fun sendCalendarIntent(medicine: Medicine, context: Context) {
+            val lastDayOf = context.getString(R.string.last_day_of)
+            val supply = context.getString(R.string.supply)
+            val intent = Intent(Intent.ACTION_INSERT).apply {
+                setData(CalendarContract.Events.CONTENT_URI)
+                        .putExtra(CalendarContract.Events.TITLE, "$lastDayOf ${medicine.name} $supply.")
+                        .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, medicine.enoughUntil())
+            }
+            if (intent.resolveActivity(context.packageManager) != null) {
+                context.startActivity(intent)
+            }
         }
     }
 }
