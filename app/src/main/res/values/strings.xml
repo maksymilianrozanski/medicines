@@ -12,4 +12,9 @@
     <string name="daily_usage_cannot_be_blank">Daily usage cannot be blank.</string>
     <string name="last_day_of">Last day of</string>
     <string name="supply">supply</string>
+    <string name="expected_quantity_today">Expected quantity today</string>
+    <string name="daily_usage_is_0">Daily usage is 0.</string>
+    <string name="enough_until">Enough until</string>
+    <string name="delete">Delete</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete</string>
 </resources>

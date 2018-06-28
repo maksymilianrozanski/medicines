@@ -1,5 +1,6 @@
 package io.github.maksymilianrozanski.medicinesbox.data
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -50,10 +51,13 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
         var editButton = itemView.findViewById(R.id.editButton) as Button
         var calendarIntentButton = itemView.findViewById(R.id.calendarIntentButton) as Button
 
+        @SuppressLint("SetTextI18n")
         fun bindViews(medicine: Medicine) {
             medicineName.text = medicine.name
-            expectedQuantity.text = "Expected quantity today: ${String.format("%.2f", quantityCalculator.calculateQuantityToday(medicine))}"
-            medicineDailyUsage.text = "Daily usage: ${String.format("%.2f", medicine.dailyUsage)}"
+            expectedQuantity.text = context.getString(R.string.expected_quantity_today) +
+                    ": ${String.format("%.2f", quantityCalculator.calculateQuantityToday(medicine))}"
+            medicineDailyUsage.text = context.getString(R.string.daily_usage) +
+                    ": ${String.format("%.2f", medicine.dailyUsage)}"
             setMedicineEnoughUntil(medicine)
             medicineName.setOnClickListener(this)
             deleteButton.setOnClickListener(this)
@@ -61,12 +65,14 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
             calendarIntentButton.setOnClickListener(this)
         }
 
+        @SuppressLint("SetTextI18n")
         private fun setMedicineEnoughUntil(medicine: Medicine) {
             var medicineEnoughUntil = itemView.findViewById(R.id.enoughUntil) as TextView
             if (medicine.dailyUsage?.equals(0)!!) {
-                medicineEnoughUntil.text = "Daily usage is 0."
+                medicineEnoughUntil.text = context.getString(R.string.daily_usage_is_0)
             } else
-                medicineEnoughUntil.text = "Enough until: ${medicine.enoughUntilDate()}"
+                medicineEnoughUntil.text = context.getString(R.string.enough_until) +
+                        ": ${medicine.enoughUntilDate()}"
         }
 
         override fun onClick(view: View?) {
@@ -90,16 +96,16 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
 
         private fun deletionAlertDialog(context: Context, medicine: Medicine): AlertDialog {
             return AlertDialog.Builder(context)
-                    .setTitle("Delete")
-                    .setMessage("Are you sure you want to delete ${medicine.name}?")
-                    .setPositiveButton("Delete") { _, _ ->
+                    .setTitle(context.getString(R.string.delete))
+                    .setMessage("${context.getString(R.string.are_you_sure_you_want_to_delete)} ${medicine.name}?")
+                    .setPositiveButton(context.getString(R.string.delete)) { _, _ ->
                         run {
                             list.removeAt(adapterPosition)
                             deleteItem(medicine.id!!)
                             notifyItemRemoved(adapterPosition)
                         }
                     }
-                    .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+                    .setNegativeButton(context.getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
                     .create()
         }
 
