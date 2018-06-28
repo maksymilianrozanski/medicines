@@ -18,7 +18,7 @@
             android:id="@+id/medicineName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/expectedQuantity"
@@ -38,10 +38,20 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/calendarIntentButton"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp"
+        android:background="@android:drawable/ic_menu_my_calendar"
+        android:padding="8dp" />
+
+    <Button
         android:id="@+id/editButton"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentEnd="true"
+        android:layout_below="@id/calendarIntentButton"
         android:layout_margin="8dp"
         android:background="@android:drawable/ic_menu_edit"
         android:padding="8dp" />
@@ -55,5 +65,4 @@
         android:layout_margin="8dp"
         android:background="@android:drawable/ic_delete"
         android:padding="8dp" />
-
 </RelativeLayout>
