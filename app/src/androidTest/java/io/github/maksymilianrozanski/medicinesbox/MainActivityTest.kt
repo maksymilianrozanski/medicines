@@ -3,9 +3,7 @@ package io.github.maksymilianrozanski.medicinesbox
 import android.app.Activity
 import android.app.Instrumentation
 import android.content.Intent
-import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.intent.Intents.intended
@@ -42,15 +40,13 @@ class MainActivityTest {
     }
 
     @Test
-    fun displayingMenuTest() {
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext())
-        onView(ViewMatchers.withText(R.string.add_new_item)).check(matches(isDisplayed()))
+    fun displayingMenuItemTest() {
+        onView(ViewMatchers.withId(R.id.addNewItem)).check(matches(isDisplayed()))
     }
 
     @Test
     fun sendingIntentFromMenuTest() {
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext())
-        onView(ViewMatchers.withText(R.string.add_new_item)).perform(click())
+        onView(ViewMatchers.withId(R.id.addNewItem)).perform(click())
         intended(allOf(hasComponent(hasClassName(AddEditActivity::class.java.name)), toPackage("io.github.maksymilianrozanski.medicinesbox")))
     }
 
