@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Medicines</string>
+    <string name="app_name">Medicine Calendar</string>
     <string name="action_settings">Settings</string>
     <string name="add_new_item">Add new item</string>
     <string name="medicine_name">Medicine name</string>

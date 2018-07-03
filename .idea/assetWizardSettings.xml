@@ -35,8 +35,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="e2e2e2" />
-                                      <entry key="foregroundImage" value="C:\Users\Max\Documents\java\ikony_tabletki\ikona_tabletki.png" />
+                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="foregroundImage" value="C:\Users\Max\Pictures\kalendarz\calendar_icon512.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
