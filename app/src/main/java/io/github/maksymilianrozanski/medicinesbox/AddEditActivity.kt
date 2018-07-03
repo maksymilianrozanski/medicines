@@ -26,6 +26,8 @@ class AddEditActivity : AppCompatActivity() {
     @Inject
     lateinit var quantityCalculator: QuantityCalculator
 
+    private var addingQuantityVisibilityKey: String = "visibility_key"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit)
@@ -33,6 +35,14 @@ class AddEditActivity : AppCompatActivity() {
         (application as MyApp).appComponent
                 .plusAddEditActivity(AddEditActivityComponent.Module())
                 .inject(this)
+
+        if (savedInstanceState?.get(addingQuantityVisibilityKey) != null) {
+            if (savedInstanceState.get(addingQuantityVisibilityKey) == true) {
+                displayAddingQuantityViews()
+            } else {
+                hideAddingQuantityViews()
+            }
+        }
 
         var launchIntent: Intent = intent
         var medicineFromIntent = launchIntent.getParcelableExtra<Medicine>(KEY_ID)
@@ -64,6 +74,14 @@ class AddEditActivity : AppCompatActivity() {
             increaseQuantity()
             hideAddingQuantityViews()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (amountOfMedicineToAddEditText.visibility == View.VISIBLE)
+            outState.putBoolean(addingQuantityVisibilityKey, true)
+        else outState.putBoolean(addingQuantityVisibilityKey, false)
+
+        super.onSaveInstanceState(outState)
     }
 
     private fun saveNewMedicine() {
@@ -140,7 +158,7 @@ class AddEditActivity : AppCompatActivity() {
 
         currentQuantity += quantityToAdd
 
-        medicineQuantityEditText.setText(String.format("%.2f",currentQuantity))
+        medicineQuantityEditText.setText(String.format("%.2f", currentQuantity))
         amountOfMedicineToAddEditText.setText("")
     }
 }
