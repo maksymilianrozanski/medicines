@@ -47,8 +47,7 @@ class AddEditActivity : AppCompatActivity() {
         var launchIntent: Intent = intent
         var medicineFromIntent = launchIntent.getParcelableExtra<Medicine>(KEY_ID)
 
-        if (medicineFromIntent != null
-                && medicineFromIntent.name != null
+        if (medicineFromIntent?.name != null
                 && medicineFromIntent.id != null
                 && medicineFromIntent.quantity != null
                 && medicineFromIntent.dailyUsage != null) {
