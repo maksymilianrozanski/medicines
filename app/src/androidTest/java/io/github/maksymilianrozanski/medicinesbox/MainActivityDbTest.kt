@@ -22,8 +22,7 @@ import io.github.maksymilianrozanski.medicinesbox.module.AppModule
 import io.github.maksymilianrozanski.medicinesbox.module.ContextModule
 import io.github.maksymilianrozanski.medicinesbox.module.DatabaseModule
 import org.hamcrest.Description
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.*
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Before
 import org.junit.Ignore
@@ -71,6 +70,15 @@ class MainActivityDbTest {
         }
     }
 
+    @Ignore
+    class MyTestEmptyDbModule(var mockedContext: Context) : DatabaseModule() {
+        override fun medicinesDatabaseHandler(context: Context?): MedicinesDatabaseHandler {
+            var emptyDb = TestMedicinesDatabaseHandler(mockedContext)
+            emptyDb.deleteMedicine(0)
+            return emptyDb
+        }
+    }
+
     @Test
     fun displayingNameTest() {
         activityRule.launchActivity(null)
@@ -78,6 +86,26 @@ class MainActivityDbTest {
         onView(withId(R.id.expectedQuantity)).check(matches(withText(containsString("Expected quantity today: "))))
         onView(withId(R.id.medicineDailyUsage)).check(matches(withText(containsString("Daily usage: 2"))))
         onView(withId(R.id.enoughUntil)).check(matches(withText("Enough until: May 30, 2018")))
+        onView(withId(R.id.emptyView)).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun displayingEmptyViewTest() {
+        val app = InstrumentationRegistry.getInstrumentation()
+                .targetContext.applicationContext as MyApp
+        var myTestEmptyDbModule: DatabaseModule = MyTestEmptyDbModule(mockedContext)
+        testAppComponent = DaggerTestAppComponent.builder()
+                .contextModule(ContextModule(app))
+                .appModule(AppModule(app))
+                .databaseModule(myTestEmptyDbModule)
+                .build()
+
+        app.appComponent = testAppComponent
+        testAppComponent.inject(this)
+
+        activityRule.launchActivity(null)
+        onView(withId(R.id.emptyView)).check(matches(isDisplayed()))
+        onView(withId(R.id.recyclerViewId)).check(matches(not(isDisplayed())))
     }
 
     @Test

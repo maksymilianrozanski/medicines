@@ -41,8 +41,8 @@ class TestMedicinesDatabaseHandler(context: Context) : MedicinesDatabaseHandler(
         return 0
     }
 
-    override fun deleteMedicine(id: Int) {
-
+    override fun deleteMedicine(index: Int) {
+        medicines.removeAt(index)
     }
 
     override fun getMedicinesCount(): Int {

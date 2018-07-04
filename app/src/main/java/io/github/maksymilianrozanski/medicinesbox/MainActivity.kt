@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import io.github.maksymilianrozanski.medicinesbox.component.MainActivityComponent
 import io.github.maksymilianrozanski.medicinesbox.data.MedicinesAdapter
 import io.github.maksymilianrozanski.medicinesbox.data.MedicinesDatabaseHandler
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-
         (application as MyApp).appComponent
                 .plus(MainActivityComponent.Module())
                 .inject(this)
@@ -42,6 +42,15 @@ class MainActivity : AppCompatActivity() {
         recyclerViewId.adapter = adapter
 
         reloadAdapterDataFromDb()
+
+        var observer = object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                displayOrHideEmptyView()
+                super.onChanged()
+            }
+        }
+
+        adapter?.registerAdapterDataObserver(observer)
     }
 
     override fun onResume() {
@@ -76,5 +85,15 @@ class MainActivity : AppCompatActivity() {
     fun runNewItemActivity() {
         var intent = Intent(this, AddEditActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun displayOrHideEmptyView() {
+        if (adapter?.itemCount == 0) {
+            emptyView.visibility = View.VISIBLE
+            recyclerViewId.visibility = View.GONE
+        } else {
+            emptyView.visibility = View.GONE
+            recyclerViewId.visibility = View.VISIBLE
+        }
     }
 }

@@ -102,7 +102,7 @@ class MedicinesAdapter(private var list: ArrayList<Medicine>, private val contex
                         run {
                             list.removeAt(adapterPosition)
                             deleteItem(medicine.id!!)
-                            notifyItemRemoved(adapterPosition)
+                            notifyDataSetChanged()
                         }
                     }
                     .setNegativeButton(context.getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
