@@ -87,9 +87,8 @@ class AddEditActivity : AppCompatActivity() {
         if (isUserInputValid()) {
             var medicineToSave = Medicine()
             medicineToSave.name = medicineNameEditText.text.toString()
-            medicineToSave.quantity = medicineQuantityEditText.text.toString().toDouble()
-            medicineToSave.dailyUsage = medicineDailyUsageEditText.text.toString().toDouble()
-
+            medicineToSave.quantity = getDoubleFromString(medicineQuantityEditText.text.toString())
+            medicineToSave.dailyUsage = getDoubleFromString(medicineDailyUsageEditText.text.toString())
             medicineToSave.savedTime = timeProvider.getCurrentTimeInMillis()
             databaseHandler.createMedicine(medicineToSave)
             NavUtils.navigateUpFromSameTask(this)
@@ -99,13 +98,11 @@ class AddEditActivity : AppCompatActivity() {
     private fun saveEditedMedicine(medicine: Medicine) {
         if (medicine.id != null && isUserInputValid()) {
             var medicineToUpdate = Medicine()
-
             medicineToUpdate.name = medicineNameEditText.text.toString()
             medicineToUpdate.quantity = getDoubleFromString(medicineQuantityEditText.text.toString())
             medicineToUpdate.dailyUsage = getDoubleFromString(medicineDailyUsageEditText.text.toString())
             medicineToUpdate.savedTime = timeProvider.getCurrentTimeInMillis()
             medicineToUpdate.id = medicine.id
-
             databaseHandler.updateMedicine(medicineToUpdate)
             NavUtils.navigateUpFromSameTask(this)
         }
@@ -152,7 +149,7 @@ class AddEditActivity : AppCompatActivity() {
             getDoubleFromString(medicineQuantityEditText.text.toString())
         } else 0.0
         val quantityToAdd: Double = if (amountOfMedicineToAddEditText.text.isNotBlank()) {
-            amountOfMedicineToAddEditText.text.toString().toDouble()
+            getDoubleFromString(amountOfMedicineToAddEditText.text.toString())
         } else 0.0
 
         currentQuantity += quantityToAdd
