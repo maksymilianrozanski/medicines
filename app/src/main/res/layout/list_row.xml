@@ -1,82 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
     android:layout_marginTop="4dp"
-    android:background="@drawable/card_background">
+    android:background="@drawable/card_background"
+    android:minHeight="100dp"
+    app:cardCornerRadius="8dp">
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/buttonsLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="4dp">
 
-        <TextView
-            android:id="@+id/medicineName"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/buttonsLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/medicineName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medicine name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:id="@+id/expectedQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/medicineDailyUsage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/enoughUntil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medicine name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/expectedQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/calendarIntentButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="8dp"
+                android:background="@android:drawable/ic_menu_my_calendar"
+                android:padding="8dp" />
 
-        <TextView
-            android:id="@+id/medicineDailyUsage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="8dp"
+                android:background="@android:drawable/ic_menu_edit"
+                android:padding="8dp" />
 
-        <TextView
-            android:id="@+id/enoughUntil"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/buttonsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/calendarIntentButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="8dp"
-            android:background="@android:drawable/ic_menu_my_calendar"
-            android:padding="8dp" />
-
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="8dp"
-            android:background="@android:drawable/ic_menu_edit"
-            android:padding="8dp" />
-
-        <Button
-            android:id="@+id/deleteButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="8dp"
-            android:background="@android:drawable/ic_delete"
-            android:padding="8dp" />
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="8dp"
+                android:background="@android:drawable/ic_delete"
+                android:padding="8dp" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
