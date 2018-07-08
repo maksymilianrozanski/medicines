@@ -11,6 +11,5 @@ interface MainActivityComponent {
     fun inject(activity: MainActivity)
 
     @dagger.Module
-    class Module {
-    }
+    class Module
 }

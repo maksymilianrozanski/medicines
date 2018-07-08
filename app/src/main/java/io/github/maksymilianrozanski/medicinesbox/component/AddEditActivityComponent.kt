@@ -11,6 +11,5 @@ interface AddEditActivityComponent {
     fun inject(activity: AddEditActivity)
 
     @dagger.Module
-    class Module {
-    }
+    class Module
 }
