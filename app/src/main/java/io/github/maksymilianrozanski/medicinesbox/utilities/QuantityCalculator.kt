@@ -38,11 +38,11 @@ class QuantityCalculator(var timeProvider: TimeProvider) {
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
 
-        if (calendar.timeInMillis > inputTime) {
+        return if (calendar.timeInMillis > inputTime) {
             calendar.timeInMillis = calendar.timeInMillis - 86400000L
-            return calendar.timeInMillis
+            calendar.timeInMillis
         } else {
-            return calendar.timeInMillis
+            calendar.timeInMillis
         }
     }
 }
