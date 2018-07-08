@@ -63,7 +63,7 @@ class AddEditActivitySavingTest {
     }
 
     @Ignore
-    class MyTestDbModule() : DatabaseModule() {
+    class MyTestDbModule : DatabaseModule() {
         override fun medicinesDatabaseHandler(context: Context?): MedicinesDatabaseHandler {
             return Mockito.mock(MedicinesDatabaseHandler::class.java)
         }
