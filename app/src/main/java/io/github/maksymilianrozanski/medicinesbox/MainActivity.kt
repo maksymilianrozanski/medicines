@@ -2,13 +2,13 @@ package io.github.maksymilianrozanski.medicinesbox
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.VisibleForTesting
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.github.maksymilianrozanski.medicinesbox.component.MainActivityComponent
 import io.github.maksymilianrozanski.medicinesbox.data.MedicinesAdapter
 import io.github.maksymilianrozanski.medicinesbox.data.MedicinesDatabaseHandler

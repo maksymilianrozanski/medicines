@@ -3,8 +3,8 @@ package io.github.maksymilianrozanski.medicinesbox
 import android.app.Activity
 import android.app.Instrumentation
 import android.content.Intent
-import android.support.test.espresso.intent.Intents
-import android.support.test.espresso.intent.matcher.IntentMatchers
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import org.hamcrest.Matchers
 
 fun stubAllIntents() {

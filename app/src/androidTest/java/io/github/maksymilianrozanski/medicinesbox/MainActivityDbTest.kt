@@ -3,17 +3,19 @@ package io.github.maksymilianrozanski.medicinesbox
 import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.intent.Intents.intended
-import android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName
-import android.support.test.espresso.intent.matcher.IntentMatchers.*
-import android.support.test.espresso.intent.rule.IntentsTestRule
-import android.support.test.espresso.matcher.ViewMatchers.*
-import android.support.test.runner.AndroidJUnit4
-import android.test.mock.MockContext
+
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName
+import androidx.test.espresso.intent.matcher.IntentMatchers.*
+import androidx.test.espresso.intent.rule.IntentsTestRule
+import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.runner.AndroidJUnit4
+
+
 import io.github.maksymilianrozanski.medicinesbox.data.MedicinesDatabaseHandler
 import io.github.maksymilianrozanski.medicinesbox.data.TestMedicinesDatabaseHandler
 import io.github.maksymilianrozanski.medicinesbox.model.KEY_ID
@@ -32,7 +34,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-@RunWith(AndroidJUnit4::class)
+
 class MainActivityDbTest {
 
     @Rule
@@ -49,7 +51,7 @@ class MainActivityDbTest {
         val app = InstrumentationRegistry.getInstrumentation()
                 .targetContext.applicationContext as MyApp
 
-        mockedContext = Mockito.mock(MockContext::class.java)
+        mockedContext = app.applicationContext
 
         var myTestDbModule: DatabaseModule = MyTestDbModule(mockedContext)
 

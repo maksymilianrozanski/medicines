@@ -1,6 +1,6 @@
 package io.github.maksymilianrozanski.medicinesbox.utilities
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import io.github.maksymilianrozanski.medicinesbox.data.TimeProvider
 import io.github.maksymilianrozanski.medicinesbox.model.Medicine
 import java.util.*

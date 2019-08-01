@@ -1,7 +1,7 @@
 package io.github.maksymilianrozanski.medicinesbox.model
 
 import android.os.Parcel
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.runner.AndroidJUnit4
 import junit.framework.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
