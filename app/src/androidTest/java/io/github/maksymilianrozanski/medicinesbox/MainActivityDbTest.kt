@@ -1,9 +1,9 @@
 package io.github.maksymilianrozanski.medicinesbox
 
+
 import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
-
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -13,9 +13,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
-
-
 import io.github.maksymilianrozanski.medicinesbox.data.MedicinesDatabaseHandler
 import io.github.maksymilianrozanski.medicinesbox.data.TestMedicinesDatabaseHandler
 import io.github.maksymilianrozanski.medicinesbox.model.KEY_ID
@@ -30,8 +27,6 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
 

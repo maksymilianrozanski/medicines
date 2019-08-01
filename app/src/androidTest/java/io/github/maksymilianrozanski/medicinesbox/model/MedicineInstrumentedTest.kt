@@ -1,12 +1,9 @@
 package io.github.maksymilianrozanski.medicinesbox.model
 
 import android.os.Parcel
-import androidx.test.runner.AndroidJUnit4
-import junit.framework.Assert.assertTrue
+import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class MedicineInstrumentedTest {
 
     @Test
