@@ -9,15 +9,13 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="?android:attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="?android:attr/colorPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -25,18 +23,18 @@
         android:id="@+id/emptyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/empty_view_text"
         android:layout_below="@id/appBarLayout"
         android:padding="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        android:text="@string/empty_view_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewId"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/appBarLayout"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_below="@id/appBarLayout">
+        android:layout_marginBottom="8dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
